@@ -8,19 +8,11 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
 
-import { AuthScreen } from '../../screens';
-import {
-  getFocusedRouteNameFromRoute,
-  NavigationContainer,
-  Route,
-} from '@react-navigation/native';
 import { Colors } from '../../constants';
 
-export type NavigatorParamsList = {
-  Auth: undefined;
-  Bets: undefined;
-};
+import { LoginForm, SignUpForm } from '../../screens/AuthScreen';
 
 class NavOptions
   implements NativeStackNavigationOptions, BottomTabNavigationOptions {}
@@ -61,19 +53,19 @@ const BetNavigator = () => {
   );
 };
 
-const AuthStackNavigator = createNativeStackNavigator<NavigatorParamsList>();
+const AuthStackNavigator = createNativeStackNavigator();
 
 const AuthNavigator = () => {
   return (
     <AuthStackNavigator.Navigator screenOptions={defaultNavOptions}>
       <AuthStackNavigator.Screen
-        name='Auth'
-        component={AuthScreen}
-        options={{ title: 'Login', headerShown: false }}
+        name='Login'
+        component={LoginForm}
+        options={{ headerShown: false }}
       />
       <AuthStackNavigator.Screen
-        name='Bets'
-        component={BetNavigator}
+        name='SignUp'
+        component={SignUpForm}
         options={{ headerShown: false }}
       />
     </AuthStackNavigator.Navigator>

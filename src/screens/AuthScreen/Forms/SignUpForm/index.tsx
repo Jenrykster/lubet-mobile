@@ -1,22 +1,41 @@
 import React from 'react';
-import { FormContainer, Input, Label } from '../styles';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { FormContainer, Input, Label, Screen } from '../styles';
 import { TouchableText, Card } from '../../../../components/';
 import { ConfirmButton } from '../ConfirmButton';
+import { Title } from '../Title';
+import { AuthNavigatorParamList } from '../../../../shared/types';
 
-export const SignUpForm = () => {
+type SignUpProps = NativeStackScreenProps<AuthNavigatorParamList, 'Login'>;
+
+export const SignUpForm = (props: SignUpProps) => {
   return (
-    <FormContainer>
-      <Card>
-        <Label>Name</Label>
-        <Input placeholder='John Doe' />
-        <Label>Email</Label>
-        <Input keyboardType='email-address' placeholder='user@mail.com' />
-        <Label>Password</Label>
-        <Input secureTextEntry placeholder='secret' />
-        <TouchableText align='right'>I forgot my password</TouchableText>
-        <ConfirmButton text='Log In' primary onPress={() => {}} />
-      </Card>
-      <ConfirmButton text='Sign Up' onPress={() => {}} />
-    </FormContainer>
+    <Screen>
+      <Title />
+      <FormContainer>
+        <Card>
+          <Label>Name</Label>
+          <Input placeholder='John Doe' />
+          <Label>Email</Label>
+          <Input keyboardType='email-address' placeholder='user@mail.com' />
+          <Label>Password</Label>
+          <Input secureTextEntry placeholder='secret' />
+          <TouchableText align='right'>I forgot my password</TouchableText>
+          <ConfirmButton
+            text='Log In'
+            primary
+            onPress={() => {}}
+            arrowDirection='FRONT'
+          />
+        </Card>
+        <ConfirmButton
+          arrowDirection='BACK'
+          text='Go back'
+          onPress={() => {
+            props.navigation.goBack();
+          }}
+        />
+      </FormContainer>
+    </Screen>
   );
 };

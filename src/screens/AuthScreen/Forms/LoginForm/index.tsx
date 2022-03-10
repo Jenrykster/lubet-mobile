@@ -1,34 +1,37 @@
 import React from 'react';
-import { FormContainer, Input, Label } from '../styles';
+import { FormContainer, Input, Label, Screen } from '../styles';
 import { TouchableText, Card } from '../../../../components/';
 import { ConfirmButton } from '../ConfirmButton';
-import { useNavigation } from '@react-navigation/native';
+import { Title } from '../Title';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { AuthNavigatorParamList } from '../../../../shared/types';
 
-export const LoginForm = () => {
-  const navigator = useNavigation();
+type LoginProps = NativeStackScreenProps<AuthNavigatorParamList, 'Login'>;
 
+export const LoginForm = (props: LoginProps) => {
   return (
-    <FormContainer>
-      <Card>
-        <Label>Email</Label>
-        <Input keyboardType='email-address' placeholder='user@mail.com' />
-        <Label>Password</Label>
-        <Input secureTextEntry placeholder='secret' />
-        <TouchableText align='right'>I forgot my password</TouchableText>
+    <Screen>
+      <Title />
+      <FormContainer>
+        <Card>
+          <Label>Email</Label>
+          <Input keyboardType='email-address' placeholder='user@mail.com' />
+          <Label>Password</Label>
+          <Input secureTextEntry placeholder='secret' />
+          <TouchableText align='right'>I forgot my password</TouchableText>
+          <ConfirmButton
+            text='Log In'
+            primary
+            onPress={() => {}}
+            arrowDirection='FRONT'
+          />
+        </Card>
         <ConfirmButton
-          text='Log In'
-          primary
-          onPress={() => {
-            console.log('Login');
-          }}
+          arrowDirection='FRONT'
+          text='Sign Up'
+          onPress={() => props.navigation.navigate('SignUp')}
         />
-      </Card>
-      <ConfirmButton
-        text='Sign Up'
-        onPress={() => {
-          console.log('Sign up');
-        }}
-      />
-    </FormContainer>
+      </FormContainer>
+    </Screen>
   );
 };

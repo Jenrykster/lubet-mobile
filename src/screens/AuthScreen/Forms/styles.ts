@@ -19,3 +19,8 @@ export const Input = styled.TextInput`
   margin: 10px 0px;
   color: ${Colors.grayText};
 `;
+
+export const Screen = styled.View`
+  flex: 1;
+  padding: 40px;
+`;
