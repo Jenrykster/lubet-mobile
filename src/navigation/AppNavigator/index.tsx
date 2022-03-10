@@ -12,7 +12,11 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { Colors } from '../../constants';
 
-import { LoginForm, SignUpForm } from '../../screens/AuthScreen';
+import {
+  LoginForm,
+  SignUpForm,
+  ResetPasswordForm,
+} from '../../screens/AuthScreen';
 
 class NavOptions
   implements NativeStackNavigationOptions, BottomTabNavigationOptions {}
@@ -66,6 +70,11 @@ const AuthNavigator = () => {
       <AuthStackNavigator.Screen
         name='SignUp'
         component={SignUpForm}
+        options={{ headerShown: false }}
+      />
+      <AuthStackNavigator.Screen
+        name='ResetPassword'
+        component={ResetPasswordForm}
         options={{ headerShown: false }}
       />
     </AuthStackNavigator.Navigator>

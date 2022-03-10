@@ -5,9 +5,10 @@ import { TouchableTextStyle } from './styles';
 export const TouchableText = (props: {
   children: ReactNode;
   align: string;
+  onPress: () => void;
 }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={props.onPress}>
       <TouchableTextStyle align={props.align}>
         {props.children}
       </TouchableTextStyle>

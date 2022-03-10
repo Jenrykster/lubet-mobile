@@ -20,9 +20,8 @@ export const SignUpForm = (props: SignUpProps) => {
           <Input keyboardType='email-address' placeholder='user@mail.com' />
           <Label>Password</Label>
           <Input secureTextEntry placeholder='secret' />
-          <TouchableText align='right'>I forgot my password</TouchableText>
           <ConfirmButton
-            text='Log In'
+            text='Register'
             primary
             onPress={() => {}}
             arrowDirection='FRONT'

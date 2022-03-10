@@ -6,9 +6,12 @@ import { Title } from '../Title';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthNavigatorParamList } from '../../../../shared/types';
 
-type LoginProps = NativeStackScreenProps<AuthNavigatorParamList, 'Login'>;
+type ResetPasswordProps = NativeStackScreenProps<
+  AuthNavigatorParamList,
+  'ResetPassword'
+>;
 
-export const LoginForm = (props: LoginProps) => {
+export const ResetPasswordForm = (props: ResetPasswordProps) => {
   return (
     <Screen>
       <Title />
@@ -16,25 +19,19 @@ export const LoginForm = (props: LoginProps) => {
         <Card>
           <Label>Email</Label>
           <Input keyboardType='email-address' placeholder='user@mail.com' />
-          <Label>Password</Label>
-          <Input secureTextEntry placeholder='secret' />
-          <TouchableText
-            align='right'
-            onPress={() => props.navigation.navigate('ResetPassword')}
-          >
-            I forgot my password
-          </TouchableText>
           <ConfirmButton
-            text='Log In'
+            text='Send Link'
             primary
             onPress={() => {}}
             arrowDirection='FRONT'
           />
         </Card>
         <ConfirmButton
-          arrowDirection='FRONT'
-          text='Sign Up'
-          onPress={() => props.navigation.navigate('SignUp')}
+          arrowDirection='BACK'
+          text='Go back'
+          onPress={() => {
+            props.navigation.goBack();
+          }}
         />
       </FormContainer>
     </Screen>
