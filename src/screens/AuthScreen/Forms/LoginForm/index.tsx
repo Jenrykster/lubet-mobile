@@ -8,10 +8,14 @@ import { AuthNavigatorParamList } from '../../../../shared/types';
 import { login } from '../../../../shared/services';
 import { ActivityIndicator, Alert } from 'react-native';
 import { Colors } from '../../../../constants';
+import { useDispatch } from 'react-redux';
+import { loginUserAction } from '../../../../store';
 
 type LoginProps = NativeStackScreenProps<AuthNavigatorParamList, 'Login'>;
 
 export const LoginForm = (props: LoginProps) => {
+  const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState(false);
   const [typedEmail, setTypedEmail] = useState('');
   const [typedPassword, setTypedPassword] = useState('');
@@ -20,13 +24,15 @@ export const LoginForm = (props: LoginProps) => {
     setIsLoading(true);
 
     const result = await login(typedEmail, typedPassword);
-    if (result.status !== 200) {
+    if (result.status === 200) {
+      if (result.data.token) {
+        dispatch(loginUserAction({ token: result.data.token.token }));
+      }
+    } else {
+      console.log(result);
       Alert.alert('Error', result.data.message, [
         { text: 'Ok', style: 'destructive' },
       ]);
-    } else {
-      // Loga o usuário aqui
-      console.log(result.data.token);
     }
     setIsLoading(false);
   };

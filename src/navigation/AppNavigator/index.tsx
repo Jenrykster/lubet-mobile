@@ -17,6 +17,8 @@ import {
   SignUpForm,
   ResetPasswordForm,
 } from '../../screens/AuthScreen';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 class NavOptions
   implements NativeStackNavigationOptions, BottomTabNavigationOptions {}
@@ -82,9 +84,13 @@ const AuthNavigator = () => {
 };
 
 export default () => {
+  const userToken = useSelector((state: RootState) => state.user.token);
+  console.log(userToken);
+  const tokenIsValid = userToken.length > 0;
   return (
     <NavigationContainer>
-      <AuthNavigator />
+      {!tokenIsValid && <AuthNavigator />}
+      {tokenIsValid && <BetNavigator />}
     </NavigationContainer>
   );
 };
