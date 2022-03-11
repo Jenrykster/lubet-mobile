@@ -1,5 +1,9 @@
 export type Game = {
-  name: string;
   color: string;
-  id: string;
+  description: string;
+  id: number;
+  max_number: number;
+  type: string;
+  price: number;
+  range: number;
 };

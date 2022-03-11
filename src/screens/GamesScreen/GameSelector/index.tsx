@@ -11,7 +11,7 @@ const GameElement = (props: { game: Game; active: boolean }) => {
   return (
     <GameElementContainer active={props.active} color={props.game.color}>
       <GameElementTitle active={props.active} color={props.game.color}>
-        {props.game.name}
+        {props.game.type}
       </GameElementTitle>
     </GameElementContainer>
   );
