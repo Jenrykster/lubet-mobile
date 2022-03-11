@@ -17,6 +17,8 @@ import {
   SignUpForm,
   ResetPasswordForm,
   GamesScreen,
+  NewBetScreen,
+  CartScreen,
 } from '../../screens';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
@@ -55,10 +57,8 @@ const BetNavigator = () => {
         }}
       />
       <BetTabsNavigator.Screen
-        name='NewGame'
-        component={() => {
-          return <Text>NewGame</Text>;
-        }}
+        name='NewBet'
+        component={NewBetScreen}
         options={{
           title: 'New Bet',
           tabBarIcon: () => (
@@ -73,9 +73,7 @@ const BetNavigator = () => {
       />
       <BetTabsNavigator.Screen
         name='Cart'
-        component={() => {
-          return <Text>Cart</Text>;
-        }}
+        component={CartScreen}
         options={{
           title: 'Your Cart',
           tabBarIcon: () => (
