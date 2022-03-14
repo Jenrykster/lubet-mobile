@@ -7,6 +7,7 @@ import { Bet, Game } from '../../shared/types';
 import { setGamesAction, RootState } from '../../store';
 import { BetList } from './BetList';
 import { GameSelector } from './GameSelector';
+import { NoBetsFound } from './NoBetsFound';
 
 export const GamesScreen = () => {
   const dispatch = useDispatch();
@@ -57,6 +58,17 @@ export const GamesScreen = () => {
     fetchBets();
   }, [selectedGames]);
 
+  const betListContent =
+    betList && betList.length > 0 ? (
+      <BetList
+        bets={betList}
+        onScroll={saveScrollProgress}
+        scrollOffset={betListScrollOffset}
+      />
+    ) : (
+      <NoBetsFound />
+    );
+
   return gameList ? (
     <View>
       <GameSelector
@@ -65,13 +77,7 @@ export const GamesScreen = () => {
         onElementPress={addSelectedType}
       />
       {isLoading && <ActivityIndicator color={Colors.primary} size='large' />}
-      {!isLoading && betList && (
-        <BetList
-          bets={betList}
-          onScroll={saveScrollProgress}
-          scrollOffset={betListScrollOffset}
-        />
-      )}
+      {!isLoading && betList && betListContent}
     </View>
   ) : (
     <ActivityIndicator color={Colors.primary} />
