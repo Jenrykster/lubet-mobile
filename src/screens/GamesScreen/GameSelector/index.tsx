@@ -7,9 +7,18 @@ import {
   GameSelectorContainer,
 } from './styles';
 
-const GameElement = (props: { game: Game; active: boolean }) => {
+const GameElement = (props: {
+  game: Game;
+  active: boolean;
+  onElementPress: (pressedType: string) => void;
+}) => {
   return (
-    <GameElementContainer active={props.active} color={props.game.color}>
+    <GameElementContainer
+      active={props.active}
+      color={props.game.color}
+      activeOpacity={0.5}
+      onPress={() => props.onElementPress(props.game.type)}
+    >
       <GameElementTitle active={props.active} color={props.game.color}>
         {props.game.type}
       </GameElementTitle>
@@ -17,10 +26,21 @@ const GameElement = (props: { game: Game; active: boolean }) => {
   );
 };
 
-export const GameSelector = (props: { betList: Game[] }) => {
+export const GameSelector = (props: {
+  betList: Game[];
+  selectedGames: string[];
+  onElementPress: (pressedType: string) => void;
+}) => {
   const renderGames = (gameList: Game[]) => {
     return gameList.map((game) => {
-      return <GameElement game={game} key={game.id} active={true} />;
+      return (
+        <GameElement
+          game={game}
+          key={game.id}
+          active={props.selectedGames.includes(game.type)}
+          onElementPress={props.onElementPress}
+        />
+      );
     });
   };
   return (

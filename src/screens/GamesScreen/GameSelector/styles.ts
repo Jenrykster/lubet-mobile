@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-export const GameElementContainer = styled.View<{
+export const GameElementContainer = styled.TouchableOpacity<{
   active?: boolean;
   color: string;
 }>`
