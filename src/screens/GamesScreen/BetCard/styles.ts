@@ -1,13 +1,13 @@
 import styled from 'styled-components/native';
 
 export const BetCardContainer = styled.TouchableOpacity<{
-  height: number;
+  height: string;
   color: string;
 }>`
   background-color: ${(props) => props.color};
   padding: 20px;
   margin: 10px;
-  height: ${(props) => props.height + 'px'};
+  height: ${(props) => props.height};
   border-radius: 20px;
   overflow: hidden;
 `;

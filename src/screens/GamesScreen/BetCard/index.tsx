@@ -22,8 +22,13 @@ const Number = (props: { value: number | string }) => {
 
 export const BetCard = (props: { bet: Bet; color: string }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const betNumbers = props.bet.choosen_numbers.split(',');
+  const isSingleRow = Math.round(betNumbers.length / 8) < 2;
 
   const toggleOpen = () => {
+    if (isSingleRow) {
+      return;
+    }
     setIsOpen((prevState) => !prevState);
   };
 
@@ -31,7 +36,7 @@ export const BetCard = (props: { bet: Bet; color: string }) => {
 
   return (
     <BetCardContainer
-      height={isOpen ? 180 : 125}
+      height={isOpen ? '180px' : 'auto'}
       activeOpacity={0.9}
       onPress={toggleOpen}
       color={props.color}
@@ -43,7 +48,7 @@ export const BetCard = (props: { bet: Bet; color: string }) => {
         </TitleText>
       </BetCardDataContainer>
       <MaskedView
-        style={{ flex: 1 }}
+        style={{ flex: 1, alignItems: 'center' }}
         maskElement={
           <LinearGradient
             colors={['black', gradientEndColor]}
@@ -54,7 +59,7 @@ export const BetCard = (props: { bet: Bet; color: string }) => {
         }
       >
         <FlatList
-          data={props.bet.choosen_numbers.split(',')}
+          data={betNumbers}
           keyExtractor={(item) => item.toString()}
           renderItem={(itemData) => <Number value={itemData.item} />}
           numColumns={8}

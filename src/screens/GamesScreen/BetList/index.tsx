@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Bet } from '../../../shared/types';
 import { RootState } from '../../../store';
 import { BetCard } from '../BetCard';
+import { BetListContainer } from './styles';
 
 export const BetList = (props: { bets: Bet[] }) => {
   const gameTypes = useSelector((state: RootState) => state.games.gameList);
@@ -15,7 +16,7 @@ export const BetList = (props: { bets: Bet[] }) => {
     return <BetCard bet={itemData.item} color={color || 'black'} />;
   };
   return (
-    <FlatList
+    <BetListContainer
       data={props.bets}
       renderItem={(itemData) => renderBet(itemData)}
     />
