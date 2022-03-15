@@ -17,6 +17,7 @@ export const NewBetScreen = (props: BetScreenProps) => {
 
   const changeSelectedGame = (newSelectedGame: string) => {
     if (selectedGame[0] === newSelectedGame) return;
+    setSelectedNumbers([]);
     setSelectedGame([newSelectedGame]);
   };
 
@@ -31,7 +32,6 @@ export const NewBetScreen = (props: BetScreenProps) => {
   };
 
   useEffect(() => {
-    setSelectedNumbers([]);
     props.navigation.setOptions({ title: `New bet for ${selectedGame}` });
   }, [selectedGame]);
 
