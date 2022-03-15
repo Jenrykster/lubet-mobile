@@ -1,5 +1,4 @@
 import React from 'react';
-import { Text } from 'react-native';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
@@ -23,6 +22,7 @@ import {
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { Ionicons } from '@expo/vector-icons';
+import { BetNavigatorParamList } from '../../shared/types/';
 
 class NavOptions
   implements NativeStackNavigationOptions, BottomTabNavigationOptions {}
@@ -36,7 +36,7 @@ const defaultNavOptions: NavOptions = {
   },
 };
 
-const BetTabsNavigator = createBottomTabNavigator();
+const BetTabsNavigator = createBottomTabNavigator<BetNavigatorParamList>();
 
 const BetNavigator = () => {
   return (
@@ -111,7 +111,6 @@ const AuthNavigator = () => {
 
 export default () => {
   const userToken = useSelector((state: RootState) => state.user.token);
-  console.log(userToken);
   const tokenIsValid = userToken.length > 0;
   return (
     <NavigationContainer>

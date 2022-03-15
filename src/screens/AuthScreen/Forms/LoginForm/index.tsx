@@ -29,7 +29,6 @@ export const LoginForm = (props: LoginProps) => {
         dispatch(loginUserAction({ token: result.data.token.token }));
       }
     } else {
-      console.log(result);
       Alert.alert('Error', result.data.message, [
         { text: 'Ok', style: 'destructive' },
       ]);
