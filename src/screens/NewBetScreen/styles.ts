@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { Colors } from '../../constants';
 
-export const Description = styled.Text`
+export const Description = styled.Text<{ borderColor: string }>`
   color: ${Colors.grayText};
   padding: 10px;
   font-size: 13px;
@@ -10,6 +10,6 @@ export const Description = styled.Text`
   margin: 0px 3px;
   margin-bottom: 3%;
   border-width: 1px;
-  border-color: ${Colors.primary};
+  border-color: ${(props) => props.borderColor};
   text-align: center;
 `;

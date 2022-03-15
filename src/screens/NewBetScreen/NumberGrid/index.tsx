@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, Text } from 'react-native';
-import { NumberGridContainer } from './styles';
+import { NumberGridContainer, NumberGridOverflowCutter } from './styles';
 import { TouchableNumber } from './TouchableNumber';
 
 export const NumberGrid = (props: {
@@ -26,13 +26,14 @@ export const NumberGrid = (props: {
   };
 
   return (
-    <NumberGridContainer
-      data={numbersArray}
-      keyExtractor={(item) => item.toString()}
-      renderItem={(itemData) => renderNumber(itemData.item)}
-      numColumns={5}
-      columnWrapperStyle={{ justifyContent: 'center' }}
-      showsVerticalScrollIndicator={false}
-    />
+    <NumberGridOverflowCutter>
+      <NumberGridContainer
+        data={numbersArray}
+        keyExtractor={(item) => item.toString()}
+        renderItem={(itemData) => renderNumber(itemData.item)}
+        numColumns={5}
+        columnWrapperStyle={{ justifyContent: 'center' }}
+      />
+    </NumberGridOverflowCutter>
   );
 };
