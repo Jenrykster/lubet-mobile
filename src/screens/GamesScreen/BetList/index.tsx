@@ -8,7 +8,7 @@ import {
 import { useSelector } from 'react-redux';
 import { Bet } from '../../../shared/types';
 import { RootState } from '../../../store';
-import { BetCard } from '../BetCard';
+import { BetCard } from '../../../components/BetCard';
 import { BetListContainer } from './styles';
 
 export const BetList = (props: {

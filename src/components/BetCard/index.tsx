@@ -2,7 +2,7 @@ import MaskedView from '@react-native-masked-view/masked-view';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
 import { FlatList, View } from 'react-native';
-import { Bet } from '../../../shared/types';
+import { Bet } from '../../shared/types';
 
 import {
   BetCardContainer,
