@@ -92,7 +92,7 @@ export const NewBetScreen = (props: BetScreenProps) => {
   };
 
   useEffect(() => {
-    props.navigation.setOptions({ title: `New bet for ${selectedGame}` });
+    props.navigation.setOptions({ headerTitle: `New bet for ${selectedGame}` });
   }, [selectedGame]);
 
   return (
