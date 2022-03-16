@@ -2,7 +2,7 @@ import { Game } from '.';
 
 export type CartItem = {
   id: number;
-  numbers: number[];
+  choosen_numbers: number[];
   game: Game;
   price: number;
 };

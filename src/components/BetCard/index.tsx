@@ -2,13 +2,15 @@ import MaskedView from '@react-native-masked-view/masked-view';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
 import { FlatList, View } from 'react-native';
-import { Bet } from '../../shared/types';
+import { Bet, CartItem } from '../../shared/types';
+import { toRealCurrency } from '../../shared/utils';
 
 import {
   BetCardContainer,
   BetCardDataContainer,
   NumberContainer,
   NumberTextStyle,
+  PriceContainer,
   TitleText,
 } from './styles';
 
@@ -20,10 +22,15 @@ const Number = (props: { value: number | string }) => {
   );
 };
 
-export const BetCard = (props: { bet: Bet; color: string }) => {
+export const BetCard = (props: { bet: Bet | CartItem; color: string }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const betNumbers = props.bet.choosen_numbers.split(',');
+  const betNumbers =
+    typeof props.bet.choosen_numbers === 'string'
+      ? props.bet.choosen_numbers.split(',')
+      : props.bet.choosen_numbers.map((n) => n.toString());
   const isSingleRow = Math.round(betNumbers.length / 8) < 2;
+  const gameType =
+    'type' in props.bet ? props.bet.type.type : props.bet.game.type;
 
   const toggleOpen = () => {
     if (isSingleRow) {
@@ -36,16 +43,18 @@ export const BetCard = (props: { bet: Bet; color: string }) => {
 
   return (
     <BetCardContainer
-      height={isOpen ? '180px' : 'auto'}
+      height={isOpen ? '230px' : 'auto'}
       activeOpacity={0.9}
       onPress={toggleOpen}
       color={props.color}
     >
       <BetCardDataContainer>
-        <TitleText>{props.bet.type.type}</TitleText>
-        <TitleText>
-          {new Date(props.bet.created_at).toLocaleDateString('pt-BR')}
-        </TitleText>
+        <TitleText>{gameType}</TitleText>
+        {'created_at' in props.bet && (
+          <TitleText>
+            {new Date(props.bet.created_at).toLocaleDateString('pt-BR')}
+          </TitleText>
+        )}
       </BetCardDataContainer>
       <MaskedView
         style={{ flex: 1, alignItems: 'center' }}
@@ -66,6 +75,9 @@ export const BetCard = (props: { bet: Bet; color: string }) => {
           fadingEdgeLength={10}
         />
       </MaskedView>
+      <PriceContainer>
+        <TitleText>{toRealCurrency(props.bet.price)}</TitleText>
+      </PriceContainer>
     </BetCardContainer>
   );
 };

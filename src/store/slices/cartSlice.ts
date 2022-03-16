@@ -23,7 +23,7 @@ export const cartSlice = createSlice({
       state.cartItems.push({
         id: state.currentId,
         game: action.payload.game,
-        numbers: action.payload.numbers,
+        choosen_numbers: action.payload.numbers,
         price: action.payload.game.price,
       });
       console.log(state);

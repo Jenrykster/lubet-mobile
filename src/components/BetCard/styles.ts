@@ -38,3 +38,14 @@ export const TitleText = styled.Text`
   color: white;
   font-weight: bold;
 `;
+
+export const PriceContainer = styled.View`
+  margin-top: 10px;
+  align-items: center;
+  margin-left: auto;
+  width: 30%;
+  border-radius: 20px;
+  border-color: white;
+  border-width: 1px;
+  padding: 10px;
+`;
