@@ -1,11 +1,11 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import React, { useEffect, useState } from 'react';
 import { Alert, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { GameSelector } from '../../components';
 import { Colors } from '../../constants';
 import { BetNavigatorParamList } from '../../shared/types';
-import { RootState } from '../../store';
+import { addCartItemAction, RootState } from '../../store';
 import { NewBetButtons } from './NewBetButtons';
 import { NumberGrid } from './NumberGrid';
 import { Description } from './styles';
@@ -13,6 +13,7 @@ import { Description } from './styles';
 type BetScreenProps = BottomTabScreenProps<BetNavigatorParamList, 'NewBet'>;
 
 export const NewBetScreen = (props: BetScreenProps) => {
+  const dispatch = useDispatch();
   const gameTypes = useSelector((state: RootState) => state.games.gameList);
   const [selectedGame, setSelectedGame] = useState([gameTypes[0].type]);
   const [selectedNumbers, setSelectedNumbers] = useState<number[]>([]);
@@ -57,7 +58,11 @@ export const NewBetScreen = (props: BetScreenProps) => {
       do {
         randomNumber =
           Math.round(Math.random() * selectedGameData!.range - 1) + 1;
-      } while (randomNumbers.includes(randomNumber));
+      } while (
+        randomNumbers.includes(randomNumber) ||
+        randomNumber === 0 ||
+        randomNumber > selectedGameData!.range
+      );
       randomNumbers.push(randomNumber);
     }
     setSelectedNumbers(randomNumbers);
@@ -74,6 +79,15 @@ export const NewBetScreen = (props: BetScreenProps) => {
         [{ text: 'Ok', style: 'destructive' }]
       );
       return;
+    }
+    if (selectedGameData && selectedNumbers) {
+      dispatch(
+        addCartItemAction({
+          game: selectedGameData,
+          numbers: selectedNumbers,
+        })
+      );
+      clearSelectedNumbers();
     }
   };
 
