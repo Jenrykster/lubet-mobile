@@ -3,3 +3,9 @@ export type AuthNavigatorParamList = {
   SignUp: undefined;
   ResetPassword: undefined;
 };
+
+export type BetNavigatorParamList = {
+  Cart: undefined;
+  NewBet: undefined;
+  Games: undefined;
+};

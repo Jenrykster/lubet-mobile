@@ -1,7 +1,6 @@
 import api from './api';
 
 export const getBets = (token: string, selectedGames: string[]) => {
-  console.log(token);
   return api
     .get('/bet/all-bets', {
       headers: { Authorization: `Bearer ${token}` },

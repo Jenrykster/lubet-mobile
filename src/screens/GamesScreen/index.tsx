@@ -6,7 +6,7 @@ import { getBets, getGames } from '../../shared/services';
 import { Bet, Game } from '../../shared/types';
 import { setGamesAction, RootState } from '../../store';
 import { BetList } from './BetList';
-import { GameSelector } from './GameSelector';
+import { GameSelector } from '../../components/GameSelector';
 import { NoBetsFound } from './NoBetsFound';
 
 export const GamesScreen = () => {
@@ -72,7 +72,7 @@ export const GamesScreen = () => {
   return gameList ? (
     <View>
       <GameSelector
-        betList={gameList}
+        gameList={gameList}
         selectedGames={selectedGames}
         onElementPress={addSelectedType}
       />

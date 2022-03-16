@@ -1,6 +1,6 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
-import { Game } from '../../../shared/types';
+import { ScrollView } from 'react-native';
+import { Game } from '../../shared/types';
 import {
   GameElementContainer,
   GameElementTitle,
@@ -27,7 +27,7 @@ const GameElement = (props: {
 };
 
 export const GameSelector = (props: {
-  betList: Game[];
+  gameList: Game[];
   selectedGames: string[];
   onElementPress: (pressedType: string) => void;
 }) => {
@@ -46,7 +46,7 @@ export const GameSelector = (props: {
   return (
     <GameSelectorContainer>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        {renderGames(props.betList)}
+        {renderGames(props.gameList)}
       </ScrollView>
     </GameSelectorContainer>
   );
