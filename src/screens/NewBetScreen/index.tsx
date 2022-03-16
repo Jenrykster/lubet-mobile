@@ -70,7 +70,7 @@ export const NewBetScreen = (props: BetScreenProps) => {
         'Not enough numbers',
         `You need to add ${diff} more ${
           diff > 1 ? 'numbers' : 'number'
-        } to make a bet`,
+        } to make a ${selectedGameData?.type} bet`,
         [{ text: 'Ok', style: 'destructive' }]
       );
       return;
