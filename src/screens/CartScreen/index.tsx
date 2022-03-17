@@ -1,9 +1,12 @@
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { LayoutAnimation, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { BetNavigatorParamList } from '../../shared/types';
 import { toRealCurrency } from '../../shared/utils';
 import { removeCartItemAction, RootState } from '../../store';
 import { CartItemList } from './CartItemList';
+import { EmptyCartMessage } from './EmptyCartMessage';
 import { SaveCartButton } from './SaveCartButton';
 import {
   CartTitle,
@@ -13,7 +16,8 @@ import {
   TitleContainer,
 } from './styles';
 
-export const CartScreen = () => {
+type CartScreenProps = BottomTabScreenProps<BetNavigatorParamList, 'Cart'>;
+export const CartScreen = (props: CartScreenProps) => {
   const distpatch = useDispatch();
   const cartState = useSelector((state: RootState) => state.cart);
 
@@ -21,6 +25,8 @@ export const CartScreen = () => {
     distpatch(removeCartItemAction({ itemId: id }));
     LayoutAnimation.configureNext(layoutAnimConfig);
   };
+
+  const isEmpty = cartState.cartItems.length === 0;
 
   const layoutAnimConfig = {
     duration: 300,
@@ -45,11 +51,18 @@ export const CartScreen = () => {
         </PriceContainer>
       </TitleContainer>
 
-      <CartItemList
-        cartItems={cartState.cartItems}
-        onDeleteButtonPress={deleteCartItem}
-      />
-      <SaveCartButton />
+      {!isEmpty && (
+        <CartItemList
+          cartItems={cartState.cartItems}
+          onDeleteButtonPress={deleteCartItem}
+        />
+      )}
+      {isEmpty && (
+        <EmptyCartMessage
+          onNewBetPress={() => props.navigation.navigate('NewBet')}
+        />
+      )}
+      {!isEmpty && <SaveCartButton />}
     </View>
   );
 };
