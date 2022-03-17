@@ -1,10 +1,11 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import React from 'react';
-import { LayoutAnimation, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Alert, LayoutAnimation, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { newBet } from '../../shared/services';
 import { BetNavigatorParamList } from '../../shared/types';
 import { toRealCurrency } from '../../shared/utils';
-import { removeCartItemAction, RootState } from '../../store';
+import { clearCart, removeCartItemAction, RootState } from '../../store';
 import { CartItemList } from './CartItemList';
 import { EmptyCartMessage } from './EmptyCartMessage';
 import { SaveCartButton } from './SaveCartButton';
@@ -18,12 +19,32 @@ import {
 
 type CartScreenProps = BottomTabScreenProps<BetNavigatorParamList, 'Cart'>;
 export const CartScreen = (props: CartScreenProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const distpatch = useDispatch();
+  const userToken = useSelector((state: RootState) => state.user.token);
   const cartState = useSelector((state: RootState) => state.cart);
 
   const deleteCartItem = (id: number) => {
     distpatch(removeCartItemAction({ itemId: id }));
     LayoutAnimation.configureNext(layoutAnimConfig);
+  };
+
+  const saveCart = async () => {
+    setIsLoading(true);
+    let result;
+    try {
+      result = await newBet(userToken, cartState.cartItems);
+      console.log(result);
+      if (result.status === 200) {
+        distpatch(clearCart());
+        Alert.alert('Success', 'Your cart items were saved successfully :)');
+      } else {
+        Alert.alert('Error', result.response.data.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const isEmpty = cartState.cartItems.length === 0;
@@ -62,7 +83,7 @@ export const CartScreen = (props: CartScreenProps) => {
           onNewBetPress={() => props.navigation.navigate('NewBet')}
         />
       )}
-      {!isEmpty && <SaveCartButton />}
+      {!isEmpty && <SaveCartButton onSaveCartButtonPress={saveCart} />}
     </View>
   );
 };

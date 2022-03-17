@@ -1,9 +1,11 @@
 import React from 'react';
 import { SaveCartButtonContainer, SaveCartButtonText } from './styles';
 
-export const SaveCartButton = () => {
+export const SaveCartButton = (props: {
+  onSaveCartButtonPress: () => void;
+}) => {
   return (
-    <SaveCartButtonContainer>
+    <SaveCartButtonContainer onPress={props.onSaveCartButtonPress}>
       <SaveCartButtonText>Save</SaveCartButtonText>
     </SaveCartButtonContainer>
   );
