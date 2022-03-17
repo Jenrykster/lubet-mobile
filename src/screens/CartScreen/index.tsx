@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
+import { toRealCurrency } from '../../shared/utils';
 import { RootState } from '../../store';
 import { CartItemList } from './CartItemList';
 import {
@@ -12,7 +13,7 @@ import {
 } from './styles';
 
 export const CartScreen = () => {
-  const cartItems = useSelector((state: RootState) => state.cart.cartItems);
+  const cartState = useSelector((state: RootState) => state.cart);
   return (
     <View>
       <TitleContainer>
@@ -20,11 +21,11 @@ export const CartScreen = () => {
           <CartTitleBold>CART</CartTitleBold> TOTAL:{' '}
         </CartTitle>
         <PriceContainer>
-          <CartTitlePrice>R$ 47,00</CartTitlePrice>
+          <CartTitlePrice>{toRealCurrency(cartState.cartTotal)}</CartTitlePrice>
         </PriceContainer>
       </TitleContainer>
 
-      <CartItemList cartItems={cartItems} />
+      <CartItemList cartItems={cartState.cartItems} />
     </View>
   );
 };
