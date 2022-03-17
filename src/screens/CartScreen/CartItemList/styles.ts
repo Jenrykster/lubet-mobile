@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
 
 export const CartItemsListContainer = styled.FlatList`
-  height: 70%;
+  height: 65%;
 `;
 
 export const BetCardContainer = styled.View`

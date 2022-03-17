@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toRealCurrency } from '../../shared/utils';
 import { removeCartItemAction, RootState } from '../../store';
 import { CartItemList } from './CartItemList';
+import { SaveCartButton } from './SaveCartButton';
 import {
   CartTitle,
   CartTitleBold,
@@ -48,6 +49,7 @@ export const CartScreen = () => {
         cartItems={cartState.cartItems}
         onDeleteButtonPress={deleteCartItem}
       />
+      <SaveCartButton />
     </View>
   );
 };
