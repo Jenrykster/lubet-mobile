@@ -1,11 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { cloneElement } from 'react';
-import { ListRenderItemInfo } from 'react-native';
+import { ListRenderItemInfo, View } from 'react-native';
 import { BetCard } from '../../../components/BetCard';
 import { CartItem } from '../../../shared/types';
 import {
   BetCardContainer,
   CartItemsListContainer,
+  DeleteIcon,
   DeleteIconContainer,
 } from './styles';
 
@@ -20,8 +21,8 @@ export const CartItemList = (props: { cartItems: CartItem[] }) => {
           numOfColumns={6}
           isInsideCart
         />
-        <DeleteIconContainer>
-          <Ionicons name='md-trash-bin' color='white' size={25} />
+        <DeleteIconContainer activeOpacity={0.8}>
+          <DeleteIcon name='md-trash-bin' color='white' size={25} />
         </DeleteIconContainer>
       </BetCardContainer>
     );
