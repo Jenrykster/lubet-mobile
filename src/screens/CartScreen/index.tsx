@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { LayoutAnimation, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { toRealCurrency } from '../../shared/utils';
-import { RootState } from '../../store';
+import { removeCartItemAction, RootState } from '../../store';
 import { CartItemList } from './CartItemList';
 import {
   CartTitle,
@@ -13,7 +13,26 @@ import {
 } from './styles';
 
 export const CartScreen = () => {
+  const distpatch = useDispatch();
   const cartState = useSelector((state: RootState) => state.cart);
+
+  const deleteCartItem = (id: number) => {
+    distpatch(removeCartItemAction({ itemId: id }));
+    LayoutAnimation.configureNext(layoutAnimConfig);
+  };
+
+  const layoutAnimConfig = {
+    duration: 300,
+    update: {
+      type: LayoutAnimation.Types.easeInEaseOut,
+    },
+    delete: {
+      duration: 100,
+      type: LayoutAnimation.Types.easeInEaseOut,
+      property: LayoutAnimation.Properties.opacity,
+    },
+  };
+
   return (
     <View>
       <TitleContainer>
@@ -25,7 +44,10 @@ export const CartScreen = () => {
         </PriceContainer>
       </TitleContainer>
 
-      <CartItemList cartItems={cartState.cartItems} />
+      <CartItemList
+        cartItems={cartState.cartItems}
+        onDeleteButtonPress={deleteCartItem}
+      />
     </View>
   );
 };

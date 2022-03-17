@@ -30,10 +30,21 @@ export const cartSlice = createSlice({
       });
       state.cartTotal += action.payload.game.price;
     },
+    removeCartItemAction: (
+      state,
+      action: PayloadAction<{ itemId: number }>
+    ) => {
+      state.cartTotal -=
+        state.cartItems.find((item) => item.id === action.payload.itemId)
+          ?.price || 0;
+      state.cartItems = state.cartItems.filter(
+        (item) => item.id !== action.payload.itemId
+      );
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addCartItemAction } = cartSlice.actions;
+export const { addCartItemAction, removeCartItemAction } = cartSlice.actions;
 
 export default cartSlice.reducer;

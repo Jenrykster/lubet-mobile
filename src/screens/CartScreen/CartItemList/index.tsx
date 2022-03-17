@@ -10,7 +10,10 @@ import {
   DeleteIconContainer,
 } from './styles';
 
-export const CartItemList = (props: { cartItems: CartItem[] }) => {
+export const CartItemList = (props: {
+  cartItems: CartItem[];
+  onDeleteButtonPress: (id: number) => void;
+}) => {
   const renderCartItem = (cartItem: ListRenderItemInfo<CartItem>) => {
     return (
       <BetCardContainer>
@@ -21,7 +24,10 @@ export const CartItemList = (props: { cartItems: CartItem[] }) => {
           numOfColumns={6}
           isInsideCart
         />
-        <DeleteIconContainer activeOpacity={0.8}>
+        <DeleteIconContainer
+          activeOpacity={0.8}
+          onPress={() => props.onDeleteButtonPress(cartItem.item.id)}
+        >
           <DeleteIcon name='md-trash-bin' color='white' size={25} />
         </DeleteIconContainer>
       </BetCardContainer>
