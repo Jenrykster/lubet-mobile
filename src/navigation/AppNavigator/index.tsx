@@ -23,6 +23,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { Ionicons } from '@expo/vector-icons';
 import { BetNavigatorParamList } from '../../shared/types/';
+import { AnimatedCartIcon } from '../../components/AnimatedCartIcon';
 
 class NavOptions
   implements NativeStackNavigationOptions, BottomTabNavigationOptions {}
@@ -66,7 +67,7 @@ const BetNavigator = () => {
               name='md-add-circle'
               size={60}
               color={Colors.primary}
-              style={{ height: 60, marginBottom: 20 }}
+              style={{ height: 60, marginBottom: 10 }}
             />
           ),
         }}
@@ -76,9 +77,7 @@ const BetNavigator = () => {
         component={CartScreen}
         options={{
           title: 'Your Cart',
-          tabBarIcon: () => (
-            <Ionicons name='cart' size={35} color={Colors.primary} />
-          ),
+          tabBarIcon: () => <AnimatedCartIcon />,
         }}
       />
     </BetTabsNavigator.Navigator>
