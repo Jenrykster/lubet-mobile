@@ -26,8 +26,16 @@ export const CartScreen = (props: CartScreenProps) => {
   const cartState = useSelector((state: RootState) => state.cart);
 
   const deleteCartItem = (id: number) => {
-    distpatch(removeCartItemAction({ itemId: id }));
-    LayoutAnimation.configureNext(layoutAnimConfig);
+    Alert.alert('Are you sure', 'Do you really want to delete this bet ?', [
+      { text: 'No', style: 'destructive' },
+      {
+        text: 'Yes',
+        onPress: () => {
+          distpatch(removeCartItemAction({ itemId: id }));
+          LayoutAnimation.configureNext(layoutAnimConfig);
+        },
+      },
+    ]);
   };
 
   const saveCart = async () => {
