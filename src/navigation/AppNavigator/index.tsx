@@ -67,7 +67,7 @@ const BetNavigator = () => {
               name='md-add-circle'
               size={60}
               color={Colors.primary}
-              style={{ height: 60, marginBottom: 20 }}
+              style={{ height: 60, marginBottom: 10 }}
             />
           ),
         }}
