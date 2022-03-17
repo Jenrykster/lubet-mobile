@@ -28,7 +28,7 @@ export const BetCard = (props: { bet: Bet | CartItem; color: string }) => {
     typeof props.bet.choosen_numbers === 'string'
       ? props.bet.choosen_numbers.split(',')
       : props.bet.choosen_numbers.map((n) => n.toString());
-  const isSingleRow = Math.round(betNumbers.length / 8) < 2;
+  const isSingleRow = Math.ceil(betNumbers.length / 8) < 2;
   const gameType =
     'type' in props.bet ? props.bet.type.type : props.bet.game.type;
 

@@ -26,7 +26,6 @@ export const cartSlice = createSlice({
         choosen_numbers: action.payload.numbers,
         price: action.payload.game.price,
       });
-      console.log(state);
     },
   },
 });
