@@ -9,6 +9,7 @@ import {
   BetCardContainer,
   BetCardDataContainer,
   NumberContainer,
+  NumberList,
   NumberTextStyle,
   PriceContainer,
   TitleText,
@@ -22,13 +23,21 @@ const Number = (props: { value: number | string }) => {
   );
 };
 
-export const BetCard = (props: { bet: Bet | CartItem; color: string }) => {
+export const BetCard = (props: {
+  bet: Bet | CartItem;
+  color: string;
+  width?: string;
+  numOfColumns?: number;
+  isInsideCart: boolean;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const betNumbers =
     typeof props.bet.choosen_numbers === 'string'
       ? props.bet.choosen_numbers.split(',')
       : props.bet.choosen_numbers.map((n) => n.toString());
-  const isSingleRow = Math.ceil(betNumbers.length / 8) < 2;
+
+  const numOfColumns = props.numOfColumns || 8;
+  const isSingleRow = Math.ceil(betNumbers.length / numOfColumns) < 2;
   const gameType =
     'type' in props.bet ? props.bet.type.type : props.bet.game.type;
 
@@ -43,10 +52,11 @@ export const BetCard = (props: { bet: Bet | CartItem; color: string }) => {
 
   return (
     <BetCardContainer
-      height={isOpen ? '230px' : 'auto'}
       activeOpacity={0.9}
       onPress={toggleOpen}
       color={props.color}
+      width={props.width}
+      isInsideCart={props.isInsideCart}
     >
       <BetCardDataContainer>
         <TitleText>{gameType}</TitleText>
@@ -67,12 +77,13 @@ export const BetCard = (props: { bet: Bet | CartItem; color: string }) => {
           />
         }
       >
-        <FlatList
+        <NumberList
           data={betNumbers}
           keyExtractor={(item) => item.toString()}
           renderItem={(itemData) => <Number value={itemData.item} />}
-          numColumns={8}
+          numColumns={numOfColumns}
           fadingEdgeLength={10}
+          height={isOpen || isSingleRow ? 'auto' : '80px'}
         />
       </MaskedView>
       <PriceContainer>
