@@ -45,6 +45,7 @@ const BetNavigator = () => {
       screenOptions={{
         ...defaultNavOptions,
         tabBarActiveTintColor: Colors.primary,
+        tabBarLabelStyle: { marginBottom: 1 },
       }}
     >
       <BetTabsNavigator.Screen
@@ -53,7 +54,7 @@ const BetNavigator = () => {
         options={{
           title: 'Bet History',
           tabBarIcon: () => (
-            <Ionicons name='list' size={35} color={Colors.primary} />
+            <Ionicons name='list' size={40} color={Colors.primary} />
           ),
         }}
       />
@@ -62,12 +63,19 @@ const BetNavigator = () => {
         component={NewBetScreen}
         options={{
           title: 'New Bet',
+          tabBarLabelStyle: { marginLeft: -2, marginTop: 6, marginBottom: 1 },
           tabBarIcon: () => (
             <Ionicons
               name='md-add-circle'
               size={60}
               color={Colors.primary}
-              style={{ height: 60, marginBottom: 10 }}
+              style={{
+                padding: -20,
+                overflow: 'hidden',
+                borderRadius: 50,
+                height: 60,
+                marginBottom: 10,
+              }}
             />
           ),
         }}

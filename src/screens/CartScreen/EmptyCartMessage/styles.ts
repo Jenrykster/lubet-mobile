@@ -39,8 +39,8 @@ export const EmptyCartAnimation = styled(AnimatedLottieView)`
 
 export const TouchableContainer = styled.TouchableOpacity`
   border-color: ${Colors.primary};
-  border-width: 2px;
-  border-radius: 1px;
-  padding: 2px;
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 4px;
   border-style: dotted;
 `;
