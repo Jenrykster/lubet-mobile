@@ -69,6 +69,7 @@ export const LoginForm = (props: LoginProps) => {
               placeholder='user@mail.com'
               value={typedEmail}
               onChangeText={setTypedEmail}
+              valid
             />
             <Label>Password</Label>
             <Input
@@ -76,6 +77,7 @@ export const LoginForm = (props: LoginProps) => {
               placeholder='secret'
               value={typedPassword}
               onChangeText={setTypedPassword}
+              valid
             />
             <TouchableText
               align='right'

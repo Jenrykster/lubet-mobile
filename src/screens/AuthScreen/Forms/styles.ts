@@ -12,8 +12,8 @@ export const Label = styled.Text`
   font-weight: bold;
 `;
 
-export const Input = styled.TextInput<{ invalid?: boolean }>`
-  border-color: ${(props) => (props.invalid ? '#f25a41' : Colors.primary)};
+export const Input = styled.TextInput<{ valid?: boolean }>`
+  border-color: ${(props) => (props.valid ? Colors.primary : '#f25a41')};
   border-radius: 10px;
   padding: 10px;
   border-width: 2px;

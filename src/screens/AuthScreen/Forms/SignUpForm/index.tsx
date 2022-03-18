@@ -9,10 +9,21 @@ import { AuthNavigatorParamList } from '../../../../shared/types';
 import { register } from '../../../../shared/services';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Colors } from '../../../../constants';
+import {
+  validateEmail,
+  validateName,
+  validatePassword,
+} from '../../../../shared/utils';
 
 type SignUpProps = NativeStackScreenProps<AuthNavigatorParamList, 'Login'>;
 
 export const SignUpForm = (props: SignUpProps) => {
+  const [validity, setValidity] = useState({
+    email: false,
+    password: false,
+    name: false,
+  });
+
   const [isLoading, setIsLoading] = useState(false);
   const [typedEmail, setTypedEmail] = useState('');
   const [typedPassword, setTypedPassword] = useState('');
@@ -37,7 +48,34 @@ export const SignUpForm = (props: SignUpProps) => {
     };
   }, []);
 
+  useEffect(() => {
+    setValidity((prevState) => {
+      return {
+        email: validateEmail(typedEmail),
+        name: validateName(typedName),
+        password: validatePassword(typedPassword),
+      };
+    });
+  }, [typedEmail, typedName, typedPassword]);
+
   const registerUser = async () => {
+    if (!validity.name) {
+      Alert.alert('Invalid data', 'Name must have more than 2 letters');
+      return;
+    }
+
+    if (!validity.email) {
+      Alert.alert('Invalid data', 'Please use a valid email address');
+      return;
+    }
+
+    if (!validity.password) {
+      Alert.alert(
+        'Invalid data',
+        'Password must be AT LEAST 6 characters long'
+      );
+      return;
+    }
     setIsLoading(true);
 
     const result = await register(typedName, typedEmail, typedPassword);
@@ -77,6 +115,7 @@ export const SignUpForm = (props: SignUpProps) => {
               placeholder='John Doe'
               value={typedName}
               onChangeText={setTypedName}
+              valid={typedName.length === 0 || validity.name}
             />
             <Label>Email</Label>
             <Input
@@ -85,6 +124,7 @@ export const SignUpForm = (props: SignUpProps) => {
               placeholder='user@mail.com'
               value={typedEmail}
               onChangeText={setTypedEmail}
+              valid={typedEmail.length === 0 || validity.email}
             />
             <Label>Password</Label>
             <Input
@@ -92,6 +132,7 @@ export const SignUpForm = (props: SignUpProps) => {
               placeholder='secret'
               value={typedPassword}
               onChangeText={setTypedPassword}
+              valid={typedPassword.length === 0 || validity.password}
             />
             {isLoading && (
               <ActivityIndicator size={60} color={Colors.primary} />

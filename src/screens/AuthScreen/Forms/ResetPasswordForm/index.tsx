@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormContainer, Input, Label, Screen } from '../styles';
 import { Card } from '../../../../components/';
 import { ConfirmButton } from '../ConfirmButton';
@@ -9,6 +9,7 @@ import { changePassword, sendPasswordReset } from '../../../../shared/services';
 import { ActivityIndicator, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Colors } from '../../../../constants';
+import { validateEmail, validatePassword } from '../../../../shared/utils';
 
 type ResetPasswordProps = NativeStackScreenProps<
   AuthNavigatorParamList,
@@ -16,13 +17,27 @@ type ResetPasswordProps = NativeStackScreenProps<
 >;
 
 export const ResetPasswordForm = (props: ResetPasswordProps) => {
+  const [isEmailInputValid, setIsEmailInputValid] = useState(false);
+  const [isPasswordInputValid, setIsPasswordInputValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [typedEmail, setTypedEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [token, setToken] = useState('');
 
+  useEffect(() => {
+    setIsPasswordInputValid(validatePassword(newPassword));
+    setIsEmailInputValid(validateEmail(typedEmail));
+  }, [typedEmail, newPassword]);
+
   const changeUserPassword = async () => {
+    if (!isPasswordInputValid) {
+      Alert.alert(
+        'Invalid data',
+        'Password must be AT LEAST 6 characters long'
+      );
+      return;
+    }
     setIsLoading(true);
     if (token.length > 0) {
       const result = await changePassword(newPassword, token);
@@ -51,6 +66,14 @@ export const ResetPasswordForm = (props: ResetPasswordProps) => {
   };
 
   const confirmValidMail = async () => {
+    if (!isEmailInputValid) {
+      Alert.alert(
+        'Invalid data',
+        'Please use a valid email for password recovering'
+      );
+      return;
+    }
+
     setIsLoading(true);
     const result = await sendPasswordReset(typedEmail);
     if (result.status === 200) {
@@ -79,6 +102,7 @@ export const ResetPasswordForm = (props: ResetPasswordProps) => {
         placeholder='user@mail.com'
         value={typedEmail}
         onChangeText={setTypedEmail}
+        valid={typedEmail.length === 0 || isEmailInputValid}
       />
       {isLoading && <ActivityIndicator size={60} color={Colors.primary} />}
       {!isLoading && (
@@ -103,6 +127,7 @@ export const ResetPasswordForm = (props: ResetPasswordProps) => {
         value={newPassword}
         onChangeText={setNewPassword}
         key='randomKey'
+        valid={newPassword.length === 0 || isPasswordInputValid}
       />
       {isLoading && <ActivityIndicator size={60} color={Colors.primary} />}
       {!isLoading && (
