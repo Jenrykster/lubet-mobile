@@ -4,6 +4,7 @@ import { Colors } from '../../../constants';
 export const FormContainer = styled.View`
   flex: 1;
   justify-content: space-evenly;
+  margin: 50px 0px;
 `;
 
 export const Label = styled.Text`
@@ -21,6 +22,7 @@ export const Input = styled.TextInput`
 `;
 
 export const Screen = styled.View`
-  flex: 1;
   padding: 40px;
+  height: auto;
+  justify-content: space-evenly;
 `;

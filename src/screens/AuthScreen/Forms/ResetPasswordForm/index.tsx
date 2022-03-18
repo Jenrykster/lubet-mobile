@@ -7,6 +7,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthNavigatorParamList } from '../../../../shared/types';
 import { changePassword, sendPasswordReset } from '../../../../shared/services';
 import { Alert } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type ResetPasswordProps = NativeStackScreenProps<
   AuthNavigatorParamList,
@@ -85,18 +86,20 @@ export const ResetPasswordForm = (props: ResetPasswordProps) => {
   );
 
   return (
-    <Screen>
-      <Title />
-      <FormContainer>
-        <Card>{isEmailValid ? ChangePasswordForm : EmailLinkForm}</Card>
-        <ConfirmButton
-          arrowDirection='BACK'
-          text='Go back'
-          onPress={() => {
-            props.navigation.goBack();
-          }}
-        />
-      </FormContainer>
-    </Screen>
+    <KeyboardAwareScrollView>
+      <Screen>
+        <Title />
+        <FormContainer>
+          <Card>{isEmailValid ? ChangePasswordForm : EmailLinkForm}</Card>
+          <ConfirmButton
+            arrowDirection='BACK'
+            text='Go back'
+            onPress={() => {
+              props.navigation.goBack();
+            }}
+          />
+        </FormContainer>
+      </Screen>
+    </KeyboardAwareScrollView>
   );
 };

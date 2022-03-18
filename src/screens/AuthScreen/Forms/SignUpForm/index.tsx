@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Alert, Keyboard } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FormContainer, Input, Label, Screen } from '../styles';
 import { Card } from '../../../../components/';
@@ -7,6 +7,7 @@ import { ConfirmButton } from '../ConfirmButton';
 import { Title } from '../Title';
 import { AuthNavigatorParamList } from '../../../../shared/types';
 import { register } from '../../../../shared/services';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type SignUpProps = NativeStackScreenProps<AuthNavigatorParamList, 'Login'>;
 
@@ -15,6 +16,25 @@ export const SignUpForm = (props: SignUpProps) => {
   const [typedEmail, setTypedEmail] = useState('');
   const [typedPassword, setTypedPassword] = useState('');
   const [typedName, setTypedName] = useState('');
+
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
+  useEffect(() => {
+    const openKeyboardListener = Keyboard.addListener('keyboardDidShow', () => {
+      setIsKeyboardOpen(true);
+    });
+    const closeKeyboardListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setIsKeyboardOpen(false);
+      }
+    );
+
+    return () => {
+      openKeyboardListener.remove();
+      closeKeyboardListener.remove();
+    };
+  }, []);
 
   const registerUser = async () => {
     setIsLoading(true);
@@ -36,46 +56,50 @@ export const SignUpForm = (props: SignUpProps) => {
     setIsLoading(false);
   };
   return (
-    <Screen>
-      <Title />
-      <FormContainer>
-        <Card>
-          <Label>Name</Label>
-          <Input
-            placeholder='John Doe'
-            value={typedName}
-            onChangeText={setTypedName}
-          />
-          <Label>Email</Label>
-          <Input
-            autoCapitalize='none'
-            keyboardType='email-address'
-            placeholder='user@mail.com'
-            value={typedEmail}
-            onChangeText={setTypedEmail}
-          />
-          <Label>Password</Label>
-          <Input
-            secureTextEntry
-            placeholder='secret'
-            value={typedPassword}
-            onChangeText={setTypedPassword}
-          />
-          <ConfirmButton
-            text='Register'
-            primary
-            onPress={registerUser}
-            arrowDirection='FRONT'
-          />
-        </Card>
-        <ConfirmButton
-          arrowDirection='BACK'
-          text='Go back'
-          onPress={() => {
-            props.navigation.goBack();
-          }}
-        />
-      </FormContainer>
-    </Screen>
+    <KeyboardAwareScrollView>
+      <Screen>
+        <Title />
+        <FormContainer>
+          <Card>
+            <Label>Name</Label>
+            <Input
+              placeholder='John Doe'
+              value={typedName}
+              onChangeText={setTypedName}
+            />
+            <Label>Email</Label>
+            <Input
+              autoCapitalize='none'
+              keyboardType='email-address'
+              placeholder='user@mail.com'
+              value={typedEmail}
+              onChangeText={setTypedEmail}
+            />
+            <Label>Password</Label>
+            <Input
+              secureTextEntry
+              placeholder='secret'
+              value={typedPassword}
+              onChangeText={setTypedPassword}
+            />
+            <ConfirmButton
+              text='Register'
+              primary
+              onPress={registerUser}
+              arrowDirection='FRONT'
+            />
+          </Card>
+          {!isKeyboardOpen && (
+            <ConfirmButton
+              arrowDirection='BACK'
+              text='Go back'
+              onPress={() => {
+                props.navigation.goBack();
+              }}
+            />
+          )}
+        </FormContainer>
+      </Screen>
+    </KeyboardAwareScrollView>
   );
 };

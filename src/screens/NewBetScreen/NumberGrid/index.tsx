@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Text } from 'react-native';
+import { Dimensions } from 'react-native';
 import { NumberGridContainer, NumberGridOverflowCutter } from './styles';
 import { TouchableNumber } from './TouchableNumber';
 
@@ -13,6 +13,8 @@ export const NumberGrid = (props: {
     { length: props.numberRange },
     (v, k) => k + 1
   );
+  const numberGridHeight =
+    Dimensions.get('window').height > 750 ? '50%' : '40%';
 
   const renderNumber = (currentNumber: number) => {
     return (
@@ -26,7 +28,7 @@ export const NumberGrid = (props: {
   };
 
   return (
-    <NumberGridOverflowCutter>
+    <NumberGridOverflowCutter height={numberGridHeight}>
       <NumberGridContainer
         data={numbersArray}
         keyExtractor={(item) => item.toString()}
