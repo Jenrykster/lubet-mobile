@@ -10,12 +10,12 @@ export const EmptyCartMessageContainer = styled.View`
 `;
 
 export const EmptyCartMessageTitle = styled.Text`
-  color: ${Colors.buttonGreen};
+  color: ${Colors.primary};
   font-size: 30px;
 `;
 
 export const EmptyCartMessageSubTitle = styled.Text`
-  color: ${Colors.buttonGreen};
+  color: ${Colors.primary};
   font-size: 15px;
 `;
 
@@ -25,7 +25,7 @@ export const EmptyCartSubtitleContainer = styled.View`
 `;
 
 export const EmptyCartTouchableText = styled.Text`
-  color: ${Colors.buttonGreen};
+  color: ${Colors.primary};
 
   font-size: 20px;
 `;
@@ -38,7 +38,7 @@ export const EmptyCartAnimation = styled(AnimatedLottieView)`
 `;
 
 export const TouchableContainer = styled.TouchableOpacity`
-  border-color: ${Colors.buttonGreen};
+  border-color: ${Colors.primary};
   border-width: 2px;
   border-radius: 1px;
   padding: 2px;
