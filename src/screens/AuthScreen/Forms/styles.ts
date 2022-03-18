@@ -1,10 +1,10 @@
 import styled from 'styled-components/native';
 import { Colors } from '../../../constants';
 
-export const FormContainer = styled.View`
+export const FormContainer = styled.View<{ biggerMargin?: boolean }>`
   flex: 1;
   justify-content: space-evenly;
-  margin: 50px 0px;
+  margin: ${(props) => (props.biggerMargin ? '30% 0px' : '50px 0px')};
 `;
 
 export const Label = styled.Text`
@@ -12,8 +12,8 @@ export const Label = styled.Text`
   font-weight: bold;
 `;
 
-export const Input = styled.TextInput`
-  border-color: ${Colors.primary};
+export const Input = styled.TextInput<{ invalid?: boolean }>`
+  border-color: ${(props) => (props.invalid ? '#f25a41' : Colors.primary)};
   border-radius: 10px;
   padding: 10px;
   border-width: 2px;

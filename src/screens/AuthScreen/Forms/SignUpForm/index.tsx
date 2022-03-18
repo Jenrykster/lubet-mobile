@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Keyboard } from 'react-native';
+import { ActivityIndicator, Alert, Keyboard } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FormContainer, Input, Label, Screen } from '../styles';
 import { Card } from '../../../../components/';
@@ -8,6 +8,7 @@ import { Title } from '../Title';
 import { AuthNavigatorParamList } from '../../../../shared/types';
 import { register } from '../../../../shared/services';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Colors } from '../../../../constants';
 
 type SignUpProps = NativeStackScreenProps<AuthNavigatorParamList, 'Login'>;
 
@@ -49,8 +50,18 @@ export const SignUpForm = (props: SignUpProps) => {
         { text: 'Ok', style: 'destructive' },
       ]);
     } else {
-      // Loga o usuário aqui
-      console.log(result.data.token);
+      Alert.alert(
+        'Signed in successfully',
+        'Your account was created, please proceed to the login screen',
+        [
+          {
+            text: 'Ok',
+            onPress: () => {
+              props.navigation.navigate('Login');
+            },
+          },
+        ]
+      );
     }
 
     setIsLoading(false);
@@ -82,12 +93,17 @@ export const SignUpForm = (props: SignUpProps) => {
               value={typedPassword}
               onChangeText={setTypedPassword}
             />
-            <ConfirmButton
-              text='Register'
-              primary
-              onPress={registerUser}
-              arrowDirection='FRONT'
-            />
+            {isLoading && (
+              <ActivityIndicator size={60} color={Colors.primary} />
+            )}
+            {!isLoading && (
+              <ConfirmButton
+                text='Register'
+                primary
+                onPress={registerUser}
+                arrowDirection='FRONT'
+              />
+            )}
           </Card>
           {!isKeyboardOpen && (
             <ConfirmButton
