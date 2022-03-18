@@ -22,7 +22,7 @@ export const Input = styled.TextInput`
 `;
 
 export const Screen = styled.View`
-  padding: 40px 40px 0px 40px;
+  padding: 60px 40px 0px 40px;
   height: auto;
-  justify-content: space-evenly;
+  justify-content: center;
 `;
