@@ -14,7 +14,8 @@ export const FormConfirmWrapper = styled.TouchableOpacity<{ primary: boolean }>`
   justify-content: center;
   align-items: center;
   padding: 25px 20px;
-  margin: ${(props) => (props.primary ? '20px -20px -20px -21px;' : '0')};
+  margin: ${(props) =>
+    props.primary ? '20px -20px -20px -20px;' : '10% 0px 0px 0px'};
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 `;

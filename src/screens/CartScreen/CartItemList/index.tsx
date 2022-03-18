@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { cloneElement } from 'react';
-import { ListRenderItemInfo, View } from 'react-native';
+import { Dimensions, ListRenderItemInfo, View } from 'react-native';
 import { BetCard } from '../../../components/BetCard';
 import { CartItem } from '../../../shared/types';
 import {
@@ -14,6 +14,8 @@ export const CartItemList = (props: {
   cartItems: CartItem[];
   onDeleteButtonPress: (id: number) => void;
 }) => {
+  const cartListHeight = Dimensions.get('window').height > 750 ? '65%' : '50%';
+
   const renderCartItem = (cartItem: ListRenderItemInfo<CartItem>) => {
     return (
       <BetCardContainer>
@@ -36,6 +38,7 @@ export const CartItemList = (props: {
 
   return (
     <CartItemsListContainer
+      height={cartListHeight}
       data={props.cartItems}
       renderItem={(itemData) => renderCartItem(itemData)}
     />

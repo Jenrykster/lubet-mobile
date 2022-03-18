@@ -1,8 +1,8 @@
 import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
 
-export const NumberGridOverflowCutter = styled.View`
-  height: 50%;
+export const NumberGridOverflowCutter = styled.View<{ height: string }>`
+  height: ${(props) => props.height};
   border-radius: 40px;
   overflow: hidden;
 `;
