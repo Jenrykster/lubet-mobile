@@ -9,3 +9,8 @@ export type BetNavigatorParamList = {
   NewBet: undefined;
   Games: undefined;
 };
+
+export type MainNavigatorParamList = {
+  BetsNav: undefined;
+  User: undefined;
+};

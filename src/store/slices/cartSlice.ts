@@ -5,12 +5,14 @@ export interface CartState {
   cartItems: CartItem[];
   currentId: number;
   cartTotal: number;
+  lastPurchaseId: number;
 }
 
 const initialState: CartState = {
   cartItems: [],
   currentId: 0,
   cartTotal: 0,
+  lastPurchaseId: 0,
 };
 
 export const cartSlice = createSlice({
@@ -45,6 +47,7 @@ export const cartSlice = createSlice({
       state.cartItems = [];
       state.currentId = 0;
       state.cartTotal = 0;
+      state.lastPurchaseId += 1;
     },
   },
 });

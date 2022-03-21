@@ -11,7 +11,6 @@ export const getBets = (token: string, selectedGames: string[]) => {
       return response;
     })
     .catch((err) => {
-      console.log(err.response.data);
       return err.message;
     });
 };

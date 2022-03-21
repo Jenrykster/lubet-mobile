@@ -44,12 +44,24 @@ export const LoginForm = (props: LoginProps) => {
     setIsLoading(true);
 
     const result = await login(typedEmail, typedPassword);
-    if (result.status === 200) {
-      if (result.data.token) {
-        dispatch(loginUserAction({ token: result.data.token.token }));
+    try {
+      if (result.status === 200) {
+        if (result.data.token) {
+          dispatch(
+            loginUserAction({
+              token: result.data.token.token,
+              name: result.data.user.name,
+              email: result.data.user.email,
+            })
+          );
+        }
+      } else {
+        Alert.alert('Error', result.data.message, [
+          { text: 'Ok', style: 'destructive' },
+        ]);
       }
-    } else {
-      Alert.alert('Error', result.data.message, [
+    } catch (err) {
+      Alert.alert('Error', 'There was an error while accessing the servers', [
         { text: 'Ok', style: 'destructive' },
       ]);
     }
