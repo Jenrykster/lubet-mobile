@@ -2,8 +2,11 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, Keyboard, LayoutAnimation } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import { CustomInput } from '../../components/Input';
 import { MainNavigatorParamList } from '../../shared/types';
+import { validateEmail, validateName } from '../../shared/utils';
+import { RootState } from '../../store';
 import { EditUserButton } from './EditUserButton';
 import {
   AvatarPic,
@@ -20,8 +23,10 @@ import {
 type UserScreenProps = BottomTabScreenProps<MainNavigatorParamList, 'User'>;
 
 export const UserScreen = (props: UserScreenProps) => {
-  const [typedName, setTypedName] = useState('');
-  const [typedEmail, setTypedEmail] = useState('');
+  const userData = useSelector((state: RootState) => state.user);
+
+  const [typedName, setTypedName] = useState(userData.name);
+  const [typedEmail, setTypedEmail] = useState(userData.email);
   const [buttonEnabled, setButtonEnabled] = useState(true);
   const [validity, setValidity] = useState({ name: true, email: true });
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
@@ -44,7 +49,12 @@ export const UserScreen = (props: UserScreenProps) => {
     };
   }, []);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const isEmailValid = validateEmail(typedEmail);
+    const isNameValid = validateName(typedName);
+    setValidity({ email: isEmailValid, name: isNameValid });
+    setButtonEnabled(isEmailValid && isNameValid);
+  }, [typedEmail, typedName]);
 
   const transitionToEdit = () => {
     LayoutAnimation.configureNext(
@@ -60,8 +70,8 @@ export const UserScreen = (props: UserScreenProps) => {
   const userDataComponents = (
     <>
       <UserDataContainer>
-        <UserName>João Henrique</UserName>
-        <UserEmail key={'opa'}>joao@email.com</UserEmail>
+        <UserName>{typedName}</UserName>
+        <UserEmail>{typedEmail}</UserEmail>
       </UserDataContainer>
     </>
   );
@@ -89,7 +99,7 @@ export const UserScreen = (props: UserScreenProps) => {
     <Screen>
       <ColoredBackground>
         <AvatarPic>
-          <UserInitial>J</UserInitial>
+          <UserInitial>{typedName[0] || '?'}</UserInitial>
         </AvatarPic>
       </ColoredBackground>
 

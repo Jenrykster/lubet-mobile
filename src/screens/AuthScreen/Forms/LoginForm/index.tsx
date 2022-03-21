@@ -46,7 +46,13 @@ export const LoginForm = (props: LoginProps) => {
     const result = await login(typedEmail, typedPassword);
     if (result.status === 200) {
       if (result.data.token) {
-        dispatch(loginUserAction({ token: result.data.token.token }));
+        dispatch(
+          loginUserAction({
+            token: result.data.token.token,
+            name: result.data.user.name,
+            email: result.data.user.email,
+          })
+        );
       }
     } else {
       Alert.alert('Error', result.data.message, [
