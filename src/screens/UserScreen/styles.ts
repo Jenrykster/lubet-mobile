@@ -56,3 +56,10 @@ export const UserEmail = styled.Text`
   border-bottom-color: ${Colors.grayText};
   padding: 2px;
 `;
+
+export const FormContainer = styled.View`
+  margin-top: 120px;
+  height: 200px;
+  justify-content: space-evenly;
+  align-items: center;
+`;

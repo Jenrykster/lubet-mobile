@@ -1,12 +1,15 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import React, { useRef, useState } from 'react';
-import { Animated, Easing, LayoutAnimation } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, Easing, Keyboard, LayoutAnimation } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { CustomInput } from '../../components/Input';
 import { MainNavigatorParamList } from '../../shared/types';
 import { EditUserButton } from './EditUserButton';
 import {
   AvatarPic,
   ButtonContainer,
   ColoredBackground,
+  FormContainer,
   Screen,
   UserDataContainer,
   UserEmail,
@@ -17,7 +20,31 @@ import {
 type UserScreenProps = BottomTabScreenProps<MainNavigatorParamList, 'User'>;
 
 export const UserScreen = (props: UserScreenProps) => {
+  const [typedName, setTypedName] = useState('');
+  const [typedEmail, setTypedEmail] = useState('');
+  const [buttonEnabled, setButtonEnabled] = useState(true);
+  const [validity, setValidity] = useState({ name: true, email: true });
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
+
+  useEffect(() => {
+    const openKeyboardListener = Keyboard.addListener('keyboardDidShow', () => {
+      setIsKeyboardOpen(true);
+    });
+    const closeKeyboardListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setIsKeyboardOpen(false);
+      }
+    );
+
+    return () => {
+      openKeyboardListener.remove();
+      closeKeyboardListener.remove();
+    };
+  }, []);
+
+  useEffect(() => {}, []);
 
   const transitionToEdit = () => {
     LayoutAnimation.configureNext(
@@ -38,7 +65,26 @@ export const UserScreen = (props: UserScreenProps) => {
       </UserDataContainer>
     </>
   );
-  const editDataComponents = <></>;
+  const editDataComponents = (
+    <KeyboardAwareScrollView>
+      <FormContainer>
+        <CustomInput
+          valid={validity.name}
+          value={typedName}
+          icon='md-text'
+          onChange={setTypedName}
+          placeholder='John Doe'
+        />
+        <CustomInput
+          valid={validity.email}
+          value={typedEmail}
+          icon='md-mail'
+          onChange={setTypedEmail}
+          placeholder='email@email.com'
+        />
+      </FormContainer>
+    </KeyboardAwareScrollView>
+  );
   return (
     <Screen>
       <ColoredBackground>
@@ -49,13 +95,16 @@ export const UserScreen = (props: UserScreenProps) => {
 
       {!editMode && userDataComponents}
       {editMode && editDataComponents}
-      <ButtonContainer>
-        <EditUserButton
-          onPress={transitionToEdit}
-          title={editMode ? 'SAVE' : 'UPDATE'}
-          icon={editMode ? 'md-save' : 'md-create'}
-        />
-      </ButtonContainer>
+      {!isKeyboardOpen && (
+        <ButtonContainer>
+          <EditUserButton
+            disabled={!buttonEnabled}
+            onPress={transitionToEdit}
+            title={editMode ? 'SAVE' : 'UPDATE'}
+            icon={editMode ? 'md-save' : 'md-create'}
+          />
+        </ButtonContainer>
+      )}
     </Screen>
   );
 };

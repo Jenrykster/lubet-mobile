@@ -12,14 +12,16 @@ export const EditUserButton = (props: {
   height?: Animated.Value;
   title: string;
   icon?: string;
+  disabled?: boolean;
 }) => {
   return (
     <TouchableContainer style={{ scaleY: props.height }}>
       <TouchableNativeFeedback
         background={TouchableNativeFeedback.Ripple('#00330020', false)}
-        onPress={props.onPress}
+        disabled={props.disabled}
+        onPress={props.disabled ? () => {} : props.onPress}
       >
-        <EditUserButtonContainer>
+        <EditUserButtonContainer disabled={props.disabled || false}>
           <EditUserButtonText>{props.title}</EditUserButtonText>
           <EditUserButtonIcon
             name={props.icon || 'md-create'}
