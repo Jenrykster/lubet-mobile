@@ -43,7 +43,6 @@ export const CartScreen = (props: CartScreenProps) => {
     let result;
     try {
       result = await newBet(userToken, cartState.cartItems);
-      console.log(result);
       if (result.status === 200) {
         distpatch(clearCart());
         Alert.alert('Success', 'Your cart items were saved successfully :)');

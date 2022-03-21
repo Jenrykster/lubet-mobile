@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, Alert, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Colors } from '../../constants';
 import { getBets, getGames } from '../../shared/services';
-import { Bet, Game } from '../../shared/types';
+import { Bet, BetNavigatorParamList, Game } from '../../shared/types';
 import { setGamesAction, RootState } from '../../store';
 import { BetList } from './BetList';
 import { GameSelector } from '../../components/GameSelector';
 import { NoBetsFound } from './NoBetsFound';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
-export const GamesScreen = () => {
+type GamesScreenProps = BottomTabScreenProps<BetNavigatorParamList, 'Games'>;
+
+export const GamesScreen = (props: GamesScreenProps) => {
   const dispatch = useDispatch();
   const userToken = useSelector((state: RootState) => state.user.token);
-
+  const lastPurchaseId = useSelector(
+    (state: RootState) => state.cart.lastPurchaseId
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [betListScrollOffset, setBetListScrollOffset] = useState(0);
 
@@ -35,11 +40,22 @@ export const GamesScreen = () => {
   };
 
   useEffect(() => {
+    const showErrorMessage = () => {
+      Alert.alert('Sorry', 'There was a network error', [
+        { text: 'Try again', onPress: fetchGames },
+      ]);
+    };
     const fetchGames = async () => {
       const result = await getGames();
-      if (result.status === 200) {
-        setGameList(result.data.types);
-        dispatch(setGamesAction({ games: result.data.types }));
+      try {
+        if (result.status === 200) {
+          setGameList(result.data.types);
+          dispatch(setGamesAction({ games: result.data.types }));
+        } else {
+          showErrorMessage();
+        }
+      } catch (err) {
+        showErrorMessage();
       }
     };
     fetchGames();
@@ -56,7 +72,7 @@ export const GamesScreen = () => {
     };
 
     fetchBets();
-  }, [selectedGames]);
+  }, [selectedGames, lastPurchaseId]);
 
   const betListContent =
     betList && betList.length > 0 ? (
