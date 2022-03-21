@@ -24,6 +24,8 @@ import { RootState } from '../../store/store';
 import { Ionicons } from '@expo/vector-icons';
 import { BetNavigatorParamList } from '../../shared/types/';
 import { AnimatedCartIcon } from '../../components/AnimatedCartIcon';
+import { UserScreen } from '../../screens/UserScreen';
+import { TouchableNativeFeedback, View } from 'react-native';
 
 class NavOptions
   implements NativeStackNavigationOptions, BottomTabNavigationOptions {}
@@ -42,10 +44,24 @@ const BetTabsNavigator = createBottomTabNavigator<BetNavigatorParamList>();
 const BetNavigator = () => {
   return (
     <BetTabsNavigator.Navigator
-      screenOptions={{
-        ...defaultNavOptions,
-        tabBarActiveTintColor: Colors.primary,
-        tabBarLabelStyle: { marginBottom: 1 },
+      screenOptions={(props) => {
+        return {
+          ...defaultNavOptions,
+          tabBarActiveTintColor: Colors.primary,
+          tabBarLabelStyle: { marginBottom: 1 },
+          headerRightContainerStyle: { paddingRight: 15 },
+          headerRight: () => (
+            <TouchableNativeFeedback
+              useForeground={true}
+              background={TouchableNativeFeedback.Ripple('white', true, 26)}
+              onPress={() => props.navigation.navigate('User')}
+            >
+              <View>
+                <Ionicons name='md-person-circle' color='white' size={30} />
+              </View>
+            </TouchableNativeFeedback>
+          ),
+        };
       }}
     >
       <BetTabsNavigator.Screen
@@ -92,6 +108,23 @@ const BetNavigator = () => {
   );
 };
 
+const MainStackNavigator = createNativeStackNavigator();
+
+const MainNavigator = () => {
+  return (
+    <MainStackNavigator.Navigator
+      screenOptions={{ headerShown: false, ...defaultNavOptions }}
+    >
+      <MainStackNavigator.Screen name='BetsNav' component={BetNavigator} />
+      <MainStackNavigator.Screen
+        name='User'
+        component={UserScreen}
+        options={{ headerShown: true }}
+      />
+    </MainStackNavigator.Navigator>
+  );
+};
+
 const AuthStackNavigator = createNativeStackNavigator();
 
 const AuthNavigator = () => {
@@ -122,7 +155,7 @@ export default () => {
   return (
     <NavigationContainer>
       {!tokenIsValid && <AuthNavigator />}
-      {tokenIsValid && <BetNavigator />}
+      {tokenIsValid && <MainNavigator />}
     </NavigationContainer>
   );
 };
