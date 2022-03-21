@@ -1,9 +1,19 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Easing, Keyboard, LayoutAnimation } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  Animated,
+  Dimensions,
+  Easing,
+  Keyboard,
+  LayoutAnimation,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
 import { CustomInput } from '../../components/Input';
+import { Colors } from '../../constants';
+import { getUser, updateUser } from '../../shared/services';
 import { MainNavigatorParamList } from '../../shared/types';
 import { validateEmail, validateName } from '../../shared/utils';
 import { RootState } from '../../store';
@@ -23,15 +33,36 @@ import {
 type UserScreenProps = BottomTabScreenProps<MainNavigatorParamList, 'User'>;
 
 export const UserScreen = (props: UserScreenProps) => {
-  const userData = useSelector((state: RootState) => state.user);
-
-  const [typedName, setTypedName] = useState(userData.name);
-  const [typedEmail, setTypedEmail] = useState(userData.email);
+  const userToken = useSelector((state: RootState) => state.user.token);
+  const [isLoading, setIsLoading] = useState(false);
+  const [previousData, setPreviousData] = useState({ email: '', name: '' });
+  const [typedName, setTypedName] = useState('');
+  const [typedEmail, setTypedEmail] = useState('');
   const [buttonEnabled, setButtonEnabled] = useState(true);
   const [validity, setValidity] = useState({ name: true, email: true });
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
+  useEffect(() => {
+    setIsLoading(true);
+    const getUserData = async () => {
+      const result = await getUser(userToken);
+      if (result.status === 200) {
+        setPreviousData({
+          email: result.data.email,
+          name: result.data.password,
+        });
+        setTypedName(result.data.name);
+        setTypedEmail(result.data.email);
+      } else {
+        Alert.alert('Error', 'Something went wrong, please try again', [
+          { text: 'Ok', onPress: () => props.navigation.goBack() },
+        ]);
+      }
+    };
+    getUserData();
+    setIsLoading(false);
+  }, []);
   useEffect(() => {
     const openKeyboardListener = Keyboard.addListener('keyboardDidShow', () => {
       setIsKeyboardOpen(true);
@@ -65,6 +96,26 @@ export const UserScreen = (props: UserScreenProps) => {
       )
     );
     setEditMode(true);
+  };
+
+  const updateUserData = async () => {
+    setIsLoading(true);
+    const result = await updateUser(
+      { email: typedEmail, name: typedName },
+      userToken
+    );
+    if (result.status === 200) {
+      Alert.alert(
+        'Updated successfully',
+        'Your data was updated with success !',
+        [{ text: 'Ok', onPress: () => props.navigation.navigate('BetsNav') }]
+      );
+    } else {
+      Alert.alert('Error', 'Something went wrong, please try again');
+      setTypedEmail(previousData.email);
+      setTypedName(previousData.name);
+    }
+    setIsLoading(false);
   };
 
   const userDataComponents = (
@@ -103,13 +154,16 @@ export const UserScreen = (props: UserScreenProps) => {
         </AvatarPic>
       </ColoredBackground>
 
-      {!editMode && userDataComponents}
-      {editMode && editDataComponents}
-      {!isKeyboardOpen && (
-        <ButtonContainer>
+      {!editMode && !isLoading && userDataComponents}
+      {editMode && !isLoading && editDataComponents}
+      {isLoading && <ActivityIndicator size='large' color={Colors.primary} />}
+      {!isKeyboardOpen && !isLoading && (
+        <ButtonContainer
+          marginBottom={Dimensions.get('screen').height > 800 ? '40%' : '10%'}
+        >
           <EditUserButton
             disabled={!buttonEnabled}
-            onPress={transitionToEdit}
+            onPress={editMode ? updateUserData : transitionToEdit}
             title={editMode ? 'SAVE' : 'UPDATE'}
             icon={editMode ? 'md-save' : 'md-create'}
           />

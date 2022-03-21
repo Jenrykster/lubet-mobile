@@ -35,9 +35,9 @@ export const UserDataContainer = styled.View`
   margin-top: 90px;
 `;
 
-export const ButtonContainer = styled.View`
-  margin-bottom: 40%;
-  flex: 1;
+export const ButtonContainer = styled.View<{ marginBottom: string }>`
+  margin-bottom: ${(props) => props.marginBottom};
+  height: 15%;
   align-items: center;
   justify-content: flex-end;
 `;
@@ -58,7 +58,7 @@ export const UserEmail = styled.Text`
 `;
 
 export const FormContainer = styled.View`
-  margin-top: 120px;
+  margin-top: 30%;
   height: 200px;
   justify-content: space-evenly;
   align-items: center;
