@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { store } from '../../store/';
+import { store } from '@store';
 
 const api = axios.create({
   baseURL: 'http://10.0.0.105:3333',

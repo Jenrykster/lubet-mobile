@@ -1,11 +1,8 @@
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import React, { useState } from 'react';
-import { Alert, LayoutAnimation, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { newBet } from '../../shared/services';
-import { BetNavigatorParamList } from '../../shared/types';
-import { toRealCurrency } from '../../shared/utils';
-import { clearCart, removeCartItemAction, RootState } from '../../store';
+import { Alert, LayoutAnimation, View } from 'react-native';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+
 import { CartItemList } from './CartItemList';
 import { EmptyCartMessage } from './EmptyCartMessage';
 import { SaveCartButton } from './SaveCartButton';
@@ -16,6 +13,11 @@ import {
   PriceContainer,
   TitleContainer,
 } from './styles';
+
+import { newBet } from '@shared/services';
+import { BetNavigatorParamList } from '@shared/types';
+import { toRealCurrency } from '@shared/utils';
+import { clearCart, removeCartItemAction, RootState } from '@store';
 
 type CartScreenProps = BottomTabScreenProps<BetNavigatorParamList, 'Cart'>;
 export const CartScreen = (props: CartScreenProps) => {

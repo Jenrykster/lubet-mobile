@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { FormContainer, Input, Label, Screen } from '../styles';
-import { Card } from '../../../../components/';
-import { ConfirmButton } from '../ConfirmButton';
-import { Title } from '../Title';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { AuthNavigatorParamList } from '../../../../shared/types';
-import { changePassword, sendPasswordReset } from '../../../../shared/services';
 import { ActivityIndicator, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Colors } from '../../../../constants';
-import { validateEmail, validatePassword } from '../../../../shared/utils';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
+import { ConfirmButton } from '../ConfirmButton';
+import { Title } from '../Title';
+import { FormContainer, Input, Label, Screen } from '../styles';
+
+import { Card } from '@components';
+import { AuthNavigatorParamList } from '@shared/types';
+import { changePassword, sendPasswordReset } from '@shared/services';
+import { Colors } from '@constants';
+import { validateEmail, validatePassword } from '@shared/utils';
 
 type ResetPasswordProps = NativeStackScreenProps<
   AuthNavigatorParamList,

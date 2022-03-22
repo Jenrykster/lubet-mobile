@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { Colors } from '../../constants';
+import { Colors } from '@constants';
 
 export const Description = styled.Text<{ borderColor: string }>`
   color: ${Colors.grayText};

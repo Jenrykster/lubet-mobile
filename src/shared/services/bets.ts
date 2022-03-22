@@ -1,4 +1,4 @@
-import { CartItem } from '../types';
+import { CartItem } from '@types';
 import api from './api';
 
 export const getBets = (selectedGames: string[]) => {

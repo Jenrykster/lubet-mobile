@@ -1,8 +1,8 @@
 import AnimatedLottieView from 'lottie-react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Colors } from '../../constants';
-import { RootState } from '../../store';
+import { Colors } from '@constants';
+import { RootState } from '@store';
 import { AnimatedIconContainer } from './styles';
 
 export const AnimatedCartIcon = () => {

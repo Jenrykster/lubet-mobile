@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Keyboard } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { FormContainer, Input, Label, Screen } from '../styles';
-import { Card } from '../../../../components/';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import { ConfirmButton } from '../ConfirmButton';
 import { Title } from '../Title';
-import { AuthNavigatorParamList } from '../../../../shared/types';
-import { register } from '../../../../shared/services';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Colors } from '../../../../constants';
-import {
-  validateEmail,
-  validateName,
-  validatePassword,
-} from '../../../../shared/utils';
+import { FormContainer, Input, Label, Screen } from '../styles';
+
+import { Card } from '@components';
+import { AuthNavigatorParamList } from '@shared/types';
+import { register } from '@shared/services';
+import { Colors } from '@constants';
+import { validateEmail, validateName, validatePassword } from '@shared/utils';
 
 type SignUpProps = NativeStackScreenProps<AuthNavigatorParamList, 'Login'>;
 

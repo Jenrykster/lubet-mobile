@@ -1,14 +1,16 @@
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import React, { useEffect, useState } from 'react';
-import { Alert, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { GameSelector } from '../../components';
-import { Colors } from '../../constants';
-import { BetNavigatorParamList } from '../../shared/types';
-import { addCartItemAction, RootState } from '../../store';
+import { Alert, View } from 'react-native';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+
 import { NewBetButtons } from './NewBetButtons';
 import { NumberGrid } from './NumberGrid';
 import { Description } from './styles';
+
+import { GameSelector } from '@components';
+import { Colors } from '@constants';
+import { BetNavigatorParamList } from '@shared/types';
+import { addCartItemAction, RootState } from '@store';
 
 type BetScreenProps = BottomTabScreenProps<BetNavigatorParamList, 'NewBet'>;
 

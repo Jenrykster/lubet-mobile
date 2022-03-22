@@ -1,9 +1,8 @@
 import MaskedView from '@react-native-masked-view/masked-view';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
-import { FlatList, View } from 'react-native';
-import { Bet, CartItem } from '../../shared/types';
-import { toRealCurrency } from '../../shared/utils';
+import { Bet, CartItem } from '@types';
+import { toRealCurrency } from '@shared/utils';
 
 import {
   BetCardContainer,
@@ -28,7 +27,7 @@ export const BetCard = (props: {
   color: string;
   width?: string;
   numOfColumns?: number;
-  isInsideCart: boolean;
+  isInsideCart?: boolean;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const betNumbers =
@@ -56,7 +55,7 @@ export const BetCard = (props: {
       onPress={toggleOpen}
       color={props.color}
       width={props.width}
-      isInsideCart={props.isInsideCart}
+      isInsideCart={props.isInsideCart || false}
     >
       <BetCardDataContainer>
         <TitleText>{gameType}</TitleText>

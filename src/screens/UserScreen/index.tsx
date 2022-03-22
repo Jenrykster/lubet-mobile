@@ -1,4 +1,3 @@
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -8,12 +7,16 @@ import {
   LayoutAnimation,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { CustomInput } from '../../components/Input';
-import { Colors } from '../../constants';
-import { getUser, updateUser } from '../../shared/services';
-import { MainNavigatorParamList } from '../../shared/types';
-import { validateEmail, validateName } from '../../shared/utils';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+
 import { EditUserButton } from './EditUserButton';
+
+import { CustomInput } from '@components';
+import { Colors } from '@constants';
+import { getUser, updateUser } from '@shared/services';
+import { MainNavigatorParamList } from '@shared/types';
+import { validateEmail, validateName } from '@shared/utils';
+
 import {
   AvatarPic,
   ButtonContainer,

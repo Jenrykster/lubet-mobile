@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, TouchableNativeFeedback, View } from 'react-native';
+import { Animated, TouchableNativeFeedback } from 'react-native';
 import {
   EditUserButtonContainer,
   EditUserButtonIcon,

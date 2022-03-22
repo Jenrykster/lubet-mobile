@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { FormContainer, Input, Label, Screen } from '../styles';
-import { TouchableText, Card } from '../../../../components/';
-import { ConfirmButton } from '../ConfirmButton';
-import { Title } from '../Title';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { AuthNavigatorParamList } from '../../../../shared/types';
-import { login } from '../../../../shared/services';
-import { ActivityIndicator, Alert, Keyboard } from 'react-native';
-import { Colors } from '../../../../constants';
 import { useDispatch } from 'react-redux';
-import { loginUserAction } from '../../../../store';
+import { ActivityIndicator, Alert, Keyboard } from 'react-native';
+
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+import { Title } from '../Title';
+import { ConfirmButton } from '../ConfirmButton';
+import { FormContainer, Input, Label, Screen } from '../styles';
+
+import { TouchableText, Card } from '@components';
+import { AuthNavigatorParamList } from '@types';
+import { login } from '@shared/services';
+import { Colors } from '@constants';
+import { loginUserAction } from '@store';
 
 type LoginProps = NativeStackScreenProps<AuthNavigatorParamList, 'Login'>;
 

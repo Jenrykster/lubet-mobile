@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Colors } from '../../constants';
-import { getBets, getGames } from '../../shared/services';
-import { Bet, BetNavigatorParamList, Game } from '../../shared/types';
-import { setGamesAction, RootState } from '../../store';
-import { BetList } from './BetList';
-import { GameSelector } from '../../components/GameSelector';
-import { NoBetsFound } from './NoBetsFound';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+
+import { BetList } from './BetList';
+import { NoBetsFound } from './NoBetsFound';
+
+import { Colors } from '@constants';
+import { getBets, getGames } from '@shared/services';
+import { Bet, BetNavigatorParamList, Game } from '@shared/types';
+import { setGamesAction, RootState } from '@store';
+import { GameSelector } from '@components';
 
 type GamesScreenProps = BottomTabScreenProps<BetNavigatorParamList, 'Games'>;
 

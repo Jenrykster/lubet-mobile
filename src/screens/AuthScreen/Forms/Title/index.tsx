@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React from 'react';
 import { HighLight, ItalicText, TitleContainer } from './styles';
 
 export const HighLightText = (props: { children: string }) => {

@@ -1,15 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import {
   FlatList,
   ListRenderItemInfo,
   NativeScrollEvent,
   NativeSyntheticEvent,
 } from 'react-native';
-import { useSelector } from 'react-redux';
-import { Bet } from '../../../shared/types';
-import { RootState } from '../../../store';
-import { BetCard } from '../../../components/BetCard';
+
 import { BetListContainer } from './styles';
+
+import { Bet } from '@shared/types';
+import { RootState } from '@store';
+import { BetCard } from '@components';
 
 export const BetList = (props: {
   bets: Bet[];

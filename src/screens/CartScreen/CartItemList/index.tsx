@@ -1,8 +1,7 @@
-import { Ionicons } from '@expo/vector-icons';
-import React, { cloneElement } from 'react';
-import { Dimensions, ListRenderItemInfo, View } from 'react-native';
-import { BetCard } from '../../../components/BetCard';
-import { CartItem } from '../../../shared/types';
+import React from 'react';
+import { Dimensions, ListRenderItemInfo } from 'react-native';
+import { BetCard } from '@components';
+import { CartItem } from '@shared/types';
 import {
   BetCardContainer,
   CartItemsListContainer,

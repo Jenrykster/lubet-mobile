@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
@@ -8,8 +9,7 @@ import {
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-
-import { Colors } from '../../constants';
+import { Ionicons } from '@expo/vector-icons';
 
 import {
   LoginForm,
@@ -18,13 +18,13 @@ import {
   GamesScreen,
   NewBetScreen,
   CartScreen,
+  UserScreen,
 } from '../../screens';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { Ionicons } from '@expo/vector-icons';
-import { BetNavigatorParamList } from '../../shared/types/';
-import { AnimatedCartIcon } from '../../components/AnimatedCartIcon';
-import { UserScreen } from '../../screens/UserScreen';
+
+import { Colors } from '@constants';
+import { RootState } from '@store';
+import { BetNavigatorParamList } from '@types';
+import { AnimatedCartIcon } from '@components';
 import { TouchableNativeFeedback, View } from 'react-native';
 
 class NavOptions

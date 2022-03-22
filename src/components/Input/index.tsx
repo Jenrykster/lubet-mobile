@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Colors } from '../../constants';
+import { Colors } from '@constants';
 import { Input, InputContainer } from './styles';
 
 export const CustomInput = (props: {

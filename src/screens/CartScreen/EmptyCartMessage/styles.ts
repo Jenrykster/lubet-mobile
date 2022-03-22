@@ -1,6 +1,6 @@
 import AnimatedLottieView from 'lottie-react-native';
 import styled from 'styled-components/native';
-import { Colors } from '../../../constants';
+import { Colors } from '@constants';
 
 export const EmptyCartMessageContainer = styled.View`
   justify-content: center;

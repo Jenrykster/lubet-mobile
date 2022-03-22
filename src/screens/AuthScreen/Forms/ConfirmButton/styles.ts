@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { Colors } from '../../../../constants';
+import { Colors } from '@constants';
 
 export const FormConfirmText = styled.Text<{ primary: boolean }>`
   color: ${(props) => (props.primary ? 'white' : Colors.grayText)};

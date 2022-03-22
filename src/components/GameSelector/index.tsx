@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { Game } from '../../shared/types';
+import { Game } from '@types';
 import {
   GameElementContainer,
   GameElementTitle,

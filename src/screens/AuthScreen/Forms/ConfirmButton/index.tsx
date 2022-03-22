@@ -1,5 +1,6 @@
+import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '../../../../constants';
+import { Colors } from '@constants';
 import { FormConfirmText, FormConfirmWrapper } from './styles';
 
 type ARROW_DIRECTION = 'FRONT' | 'BACK';
