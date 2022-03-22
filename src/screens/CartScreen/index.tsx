@@ -44,7 +44,9 @@ export const CartScreen = (props: CartScreenProps) => {
       result = await newBet(cartState.cartItems);
       if (result.status === 200) {
         distpatch(clearCart());
-        Alert.alert('Success', 'Your cart items were saved successfully :)');
+        Alert.alert('Success', 'Your cart items were saved successfully :)', [
+          { text: 'Ok', onPress: () => props.navigation.navigate('Games') },
+        ]);
       } else {
         Alert.alert('Error', result.response.data.message);
       }
