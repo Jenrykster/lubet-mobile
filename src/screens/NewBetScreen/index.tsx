@@ -52,8 +52,9 @@ export const NewBetScreen = (props: BetScreenProps) => {
   };
 
   const completeBet = () => {
-    const randomNumbers: number[] = [];
-    for (let i = 1; i < selectedGameData!.max_number + 1; i++) {
+    const isFull = selectedNumbers.length >= selectedGameData!.max_number;
+    const randomNumbers = isFull ? [] : [...selectedNumbers];
+    for (let i = randomNumbers.length; i < selectedGameData!.max_number; i++) {
       let randomNumber: number;
       do {
         randomNumber =
