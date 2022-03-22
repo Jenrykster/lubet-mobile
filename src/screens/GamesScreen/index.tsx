@@ -14,7 +14,6 @@ type GamesScreenProps = BottomTabScreenProps<BetNavigatorParamList, 'Games'>;
 
 export const GamesScreen = (props: GamesScreenProps) => {
   const dispatch = useDispatch();
-  const userToken = useSelector((state: RootState) => state.user.token);
   const lastPurchaseId = useSelector(
     (state: RootState) => state.cart.lastPurchaseId
   );
@@ -64,7 +63,7 @@ export const GamesScreen = (props: GamesScreenProps) => {
   useEffect(() => {
     const fetchBets = async () => {
       setIsLoading(true);
-      const result = await getBets(userToken, selectedGames);
+      const result = await getBets(selectedGames);
       if (result.status === 200) {
         setBetList(result.data);
       }

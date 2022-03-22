@@ -1,22 +1,18 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
-  Animated,
   Dimensions,
-  Easing,
   Keyboard,
   LayoutAnimation,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useSelector } from 'react-redux';
 import { CustomInput } from '../../components/Input';
 import { Colors } from '../../constants';
 import { getUser, updateUser } from '../../shared/services';
 import { MainNavigatorParamList } from '../../shared/types';
 import { validateEmail, validateName } from '../../shared/utils';
-import { RootState } from '../../store';
 import { EditUserButton } from './EditUserButton';
 import {
   AvatarPic,
@@ -33,7 +29,6 @@ import {
 type UserScreenProps = BottomTabScreenProps<MainNavigatorParamList, 'User'>;
 
 export const UserScreen = (props: UserScreenProps) => {
-  const userToken = useSelector((state: RootState) => state.user.token);
   const [isLoading, setIsLoading] = useState(false);
   const [previousData, setPreviousData] = useState({ email: '', name: '' });
   const [typedName, setTypedName] = useState('');
@@ -46,7 +41,7 @@ export const UserScreen = (props: UserScreenProps) => {
   useEffect(() => {
     setIsLoading(true);
     const getUserData = async () => {
-      const result = await getUser(userToken);
+      const result = await getUser();
       if (result.status === 200) {
         setPreviousData({
           email: result.data.email,
@@ -100,10 +95,7 @@ export const UserScreen = (props: UserScreenProps) => {
 
   const updateUserData = async () => {
     setIsLoading(true);
-    const result = await updateUser(
-      { email: typedEmail, name: typedName },
-      userToken
-    );
+    const result = await updateUser({ email: typedEmail, name: typedName });
     if (result.status === 200) {
       Alert.alert(
         'Updated successfully',

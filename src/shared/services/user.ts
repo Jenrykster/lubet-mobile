@@ -1,13 +1,8 @@
 import api from './api';
 
-export const updateUser = (
-  newData: { email: string; name: string },
-  token: string
-) => {
+export const updateUser = (newData: { email: string; name: string }) => {
   return api
-    .put('/user/update', newData, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    .put('/user/update', newData)
     .then((response) => {
       return response;
     })
@@ -16,11 +11,9 @@ export const updateUser = (
     });
 };
 
-export const getUser = (token: string) => {
+export const getUser = () => {
   return api
-    .get('/user/my-account', {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    .get('/user/my-account')
     .then((response) => {
       return response;
     })

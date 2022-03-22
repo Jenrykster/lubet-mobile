@@ -22,7 +22,6 @@ export const CartScreen = (props: CartScreenProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const distpatch = useDispatch();
-  const userToken = useSelector((state: RootState) => state.user.token);
   const cartState = useSelector((state: RootState) => state.cart);
 
   const deleteCartItem = (id: number) => {
@@ -42,7 +41,7 @@ export const CartScreen = (props: CartScreenProps) => {
     setIsLoading(true);
     let result;
     try {
-      result = await newBet(userToken, cartState.cartItems);
+      result = await newBet(cartState.cartItems);
       if (result.status === 200) {
         distpatch(clearCart());
         Alert.alert('Success', 'Your cart items were saved successfully :)');
